@@ -3,1189 +3,641 @@
 <head>
 <meta charset="UTF-8">
 <meta name="color-scheme" content="light only">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Calculator — Calcularoo.com | Free & Instant</title>
-<meta name="description" content="Calculate your exact age in years, months and days from your date of birth.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Age Calculator — Free & Instant | Calcularoo</title>
+<meta name="description" content="Calculate your exact age in years, months, and days from your date of birth. Handles leap years automatically.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-<meta property="og:title" content="Age Calculator — Calcularoo.com | Free & Instant">
-<meta property="og:description" content="Calculate your exact age in years, months and days from your date of birth.">
+<meta property="og:title" content="Age Calculator — Free & Instant | Calcularoo">
+<meta property="og:description" content="Calculate your exact age in years, months, and days from your date of birth.">
 <meta property="og:url" content="https://www.calcularoo.com/age-calculator/">
 <meta property="og:type" content="website">
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="/favicon-512.png">
 <link rel="canonical" href="https://www.calcularoo.com/age-calculator/">
+
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Age Calculator","url":"https://www.calcularoo.com/age-calculator/","description":"Calculate your exact age in years, months and days from your date of birth.","applicationCategory":"UtilitiesApplication","operatingSystem":"Web Browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Age Calculator",
+  "url": "https://www.calcularoo.com/age-calculator/",
+  "description": "Calculate your exact age in years, months, and days from your date of birth.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
 </script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-<style>/* ═══════════════════════════════════════════════
-   CALCULAROO — Full Redesign
-   Fonts: Bebas Neue (display) + DM Sans (body) + Fira Code (mono)
-   Theme: Editorial dark navy + electric amber + pure white
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════════
+   CALCULAROO — Premium UI Redesign
+   Focus: Readability, Mobile-First, Clean Aesthetic
 ═══════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root { color-scheme: light only; }
-html { background: #ffffff; }
-
-:root {
-  --ink:      #0a0e1a;
-  --ink-mid:  #1e2640;
-  --ink-soft: #3d4663;
-  --slate:    #6b7498;
-  --mist:     #a8b0c8;
-  --smoke:    #e8eaf2;
+:root { 
+  color-scheme: light only; 
+  --ink:      #0f172a;
+  --ink-mid:  #334155;
+  --ink-soft: #64748b;
+  --mist:     #94a3b8;
+  --smoke:    #f1f5f9;
   --white:    #ffffff;
-  --paper:    #ffffff;
-  --amber:    #f5a623;
-  --amber-lt: #fff8ec;
-  --amber-md: #fde68a;
-  --teal:     #00b4d8;
-  --teal-lt:  #e0f7fd;
-  --green:    #06d6a0;
+  --amber:    #f59e0b;
+  --amber-lt: #fffbeb;
+  --amber-glow: rgba(245, 158, 11, 0.15);
+  --teal:     #0d9488;
+  --green:    #10b981;
   --red:      #ef4444;
-  --border:   #e2e5f0;
-  --surface:  #ffffff;
-  --text:     #0a0e1a;
-  --shadow:   0 4px 24px rgba(10,14,26,0.08);
-  --shadow-lg:0 12px 48px rgba(10,14,26,0.14);
+  --border:   #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 20px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.1);
+  --radius:   16px;
+  --radius-sm: 10px;
 }
 
+html { background: var(--smoke); scroll-behavior: smooth; }
 body {
-  background: var(--white);
+  background: var(--smoke);
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
 }
 
 /* ── TOP BAR ──────────────────────────────────── */
 .top-bar {
-  background: #ffffff;
-  color: var(--ink-soft);
+  background: var(--ink);
+  color: var(--mist);
   font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.8px;
-  padding: 9px 32px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  padding: 8px 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
   text-transform: uppercase;
 }
-.top-bar strong { color: var(--ink); font-weight: 700; }
-.top-bar-dot { color: var(--mist); }
+.top-bar strong { color: var(--white); font-weight: 700; letter-spacing: 1px; }
+.top-bar-dot { color: var(--ink-mid); }
 
 /* ── NAV ──────────────────────────────────────── */
 nav {
   position: sticky;
   top: 0;
   z-index: 200;
-  background: #ffffff;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid #e2e5f0;
-  padding: 0 40px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
-  box-shadow: 0 2px 0 rgba(10,14,26,0.04);
+  height: 64px;
 }
 
-/* ── LOGO ─────────────────────────────────────── */
-.logo-wrap {
-  display: flex;
-  align-items: baseline;
-  gap: 0;
-  text-decoration: none;
-}
-
+.logo-wrap { display: flex; align-items: baseline; gap: 0; text-decoration: none; }
 .logo-main {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: 2px;
+  font-size: 28px;
+  letter-spacing: 1.5px;
   color: var(--ink);
   line-height: 1;
 }
-
-.logo-oo {
-  display: inline-flex;
-  gap: 3px;
-  margin: 0 1px;
-  position: relative;
-  top: 3px;
-}
-
+.logo-oo { display: inline-flex; gap: 3px; margin: 0 1px; position: relative; top: 2px; }
 .logo-o {
   display: inline-flex;
-  width: 22px;
-  height: 22px;
+  width: 20px; height: 20px;
   background: var(--amber);
   color: var(--ink);
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  letter-spacing: 0;
-  box-shadow: 2px 2px 0 var(--ink);
+  font-size: 14px;
+  align-items: center; justify-content: center;
+  border-radius: 6px;
 }
-
 .logo-dot {
   font-family: 'DM Sans', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--slate);
-  letter-spacing: 0;
-  margin-left: 2px;
-  align-self: flex-end;
-  padding-bottom: 4px;
+  font-size: 10px; font-weight: 700; color: var(--ink-soft);
+  margin-left: 2px; align-self: flex-end; padding-bottom: 3px;
 }
 
-/* ── NAV LINKS ────────────────────────────────── */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
+.nav-links { display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.nav-links::-webkit-scrollbar { display: none; }
 .nav-link {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--slate);
-  text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 4px;
-  white-space: nowrap;
-  transition: all 0.15s;
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ink-soft); text-decoration: none; padding: 6px 12px; border-radius: 8px;
+  white-space: nowrap; transition: all 0.2s;
 }
+.nav-link:hover, .nav-link.active { color: var(--ink); background: var(--amber-lt); }
 
-.nav-link:hover, .nav-link.active {
-  color: var(--ink);
-  background: #fffbf2;
+/* ── PAGE HEADER ──────────────────────────────── */
+.page-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px 40px;
+  text-align: center;
 }
-
-.nav-currency {
-  background: #ffffff;
-  color: var(--ink);
-  border: none;
-  padding: 7px 14px;
-  font-family: 'Fira Code', monospace;
-  font-size: 11px;
-  font-weight: 500;
-  cursor: pointer;
-  outline: none;
-  border-radius: 4px;
-  margin-left: 12px;
-  box-shadow: none;
+.breadcrumb {
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--ink-soft); margin-bottom: 16px;
 }
+.breadcrumb a { color: var(--amber); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.breadcrumb span { color: var(--mist); margin: 0 6px; }
 
-/* ── HERO ─────────────────────────────────────── */
-.hero {
-  background: #ffffff !important;
-  padding: 80px 40px 72px;
-  position: relative;
-  overflow: hidden;
-  border-bottom: 1px solid #e2e5f0;
-}
-
-.hero-bg-text { display: none; }
-
-.hero-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 48px;
-}
-
-@media(max-width:768px){ .hero-inner{ grid-template-columns:1fr; } }
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #fffbf2;
-  border: 1px solid var(--amber-md);
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: 2px;
-  margin-bottom: 24px;
-}
-
-.hero h1 {
+.page-header h1 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(52px, 8vw, 96px);
-  font-weight: 400;
-  letter-spacing: 3px;
-  color: var(--ink);
-  line-height: 0.95;
-  margin-bottom: 24px;
-}
-
-.hero h1 .accent {
-  color: var(--amber);
-  display: block;
-}
-
-.hero-sub {
-  color: var(--ink-soft);
-  font-size: 16px;
-  font-weight: 400;
-  max-width: 480px;
-  line-height: 1.7;
-  margin-bottom: 36px;
-}
-
-.hero-stats {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-}
-
-.hero-stat {
-  border-left: 3px solid var(--amber);
-  padding-left: 16px;
-}
-
-.hero-stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px;
-  color: var(--ink);
-  letter-spacing: 1px;
-  line-height: 1;
-}
-
-.hero-stat-label {
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--slate);
-  margin-top: 2px;
-}
-
-.hero-roo {
-  font-size: 100px;
-  filter: drop-shadow(0 8px 24px rgba(245,166,35,0.3));
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0) rotate(-5deg); }
-  50%      { transform: translateY(-16px) rotate(5deg); }
-}
-
-/* ── SECTION ──────────────────────────────────── */
-.grid-section {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px 60px;
-}
-
-.section-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 40px 0 18px;
-  border-bottom: 1px solid #e2e5f0;
-  margin-bottom: 20px;
-}
-
-.section-icon {
-  width: 36px;
-  height: 36px;
-  background: var(--amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  box-shadow: 3px 3px 0 var(--ink);
-}
-
-.section-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 26px;
-  font-weight: 400;
+  font-size: clamp(36px, 6vw, 52px);
   letter-spacing: 2px;
   color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.page-header p {
+  color: var(--ink-mid);
+  font-size: 16px;
+  font-weight: 500;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.section-count {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--amber);
-  background: #fffbf2;
-  padding: 4px 12px;
-  border-radius: 2px;
-}
-
-/* ── CALC CARDS ───────────────────────────────── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
-  gap: 2px;
-  background: #ffffff;
-  border: 2px solid var(--ink);
+/* ── CALCULATOR PANEL ─────────────────────────── */
+.calc-container {
+  max-width: 900px;
+  margin: -30px auto 60px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 10;
 }
 
 .calc-card {
-  background: #ffffff;
-  border: 1px solid #e2e5f0;
-  border-radius: 14px;
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  position: relative;
-  box-shadow: 0 1px 4px rgba(10,14,26,0.04);
-}
-
-.calc-card::before {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--amber);
-  transform: scaleX(0);
-  transition: transform 0.2s;
-  transform-origin: left;
-}
-
-.calc-card:hover {
-  background: #fffdf5;
-  border-color: var(--amber);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(245,166,35,0.15);
-  z-index: 1;
-}
-
-.calc-card:hover::before { transform: scaleX(1); }
-.calc-card.active { background: #fffbf2; }
-.calc-card.active::before { transform: scaleX(1); }
-
-.card-icon {
-  width: 40px;
-  height: 40px;
-  background: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
-}
-
-.icon-coral, .icon-teal, .icon-yellow, .icon-green { background: #ffffff; }
-
-.card-info h3 {
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 3px;
-  line-height: 1.3;
-}
-
-.card-info p {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--slate);
-  line-height: 1.4;
-}
-
-/* ── CALC PANEL ───────────────────────────────── */
-.calc-panel {
-  display: none;
-  max-width: 1280px;
-  margin: 0 auto 60px;
-  padding: 0 40px;
-  animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1) both;
-}
-
-.calc-panel.open { display: block; }
-
-@keyframes slideUp {
-  from { opacity:0; transform:translateY(16px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.panel-header {
-  background: #ffffff;
-  border: 1.5px solid #e2e5f0;
-  border-bottom: none;
-  padding: 28px 32px;
-  margin-bottom: 2px;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.panel-icon {
-  width: 52px;
-  height: 52px;
-  background: var(--amber);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 26px;
-  flex-shrink: 0;
-  box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
-}
-
-.panel-header h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  color: var(--ink);
-  line-height: 1;
-}
-
-.panel-header p {
-  color: var(--ink-soft);
-  font-size: 13px;
-  font-weight: 400;
-  margin-top: 4px;
+  overflow: hidden;
 }
 
 .calc-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  background: transparent;
 }
 
-@media(max-width:640px){ .calc-grid{ grid-template-columns:1fr; } }
-
-.box {
-  background: #ffffff;
-  border: 1px solid #e2e5f0;
-  border-radius: 12px;
-  padding: 28px;
+/* Input Side */
+.input-side {
+  padding: 32px;
+  border-right: 1px solid var(--border);
 }
 
 .box-title {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 2px;
-  color: var(--slate);
-  margin-bottom: 22px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #e2e5f0;
+  font-size: 16px;
+  letter-spacing: 1.5px;
+  color: var(--ink-soft);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.box-title::before {
+  content: '';
+  display: block;
+  width: 4px; height: 16px;
+  background: var(--amber);
+  border-radius: 2px;
 }
 
-.field { margin-bottom: 20px; }
-.field:last-child { margin-bottom: 0; }
+.field { margin-bottom: 24px; }
 
 label {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--ink-soft);
+  letter-spacing: 0.5px;
+  color: var(--ink-mid);
   margin-bottom: 8px;
 }
 
 .input-wrap { position: relative; }
 
-.prefix {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
+/* Modern Date Input */
+input[type="date"] {
+  width: 100%;
+  background: var(--smoke);
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  color: var(--ink);
   font-family: 'Fira Code', monospace;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 600;
-  color: var(--amber);
+  outline: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+input[type="date"]:focus {
+  background: var(--white);
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px var(--amber-glow);
+}
+
+.input-hint {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.input-hint::before { content: 'ℹ️'; flex-shrink: 0; }
+
+/* Results Side */
+.result-side {
+  background: var(--ink);
+  color: var(--white);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-side::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 60%);
   pointer-events: none;
 }
 
-input[type="number"], select {
-  width: 100%;
-  background: #ffffff;
-  border: 2px solid var(--border);
-  border-radius: 0;
-  padding: 12px 14px 12px 36px;
-  color: var(--ink);
-  font-family: 'Fira Code', monospace;
-  font-size: 17px;
-  font-weight: 500;
-  outline: none;
-  transition: border-color 0.15s, background 0.15s;
-  appearance: none;
-}
-
-input[type="number"].no-prefix, select.no-prefix { padding-left: 14px; }
-
-input[type="number"]:focus, select:focus {
-  border-color: var(--ink);
-  background: var(--white);
-  box-shadow: 4px 4px 0 var(--amber);
-}
-
-input[type="number"]::-webkit-inner-spin-button { display: none; }
-
-input[type="range"] {
-  width: 100%;
-  -webkit-appearance: none;
-  height: 4px;
-  background: #ffffff;
-  margin-top: 12px;
-  cursor: pointer;
-  outline: none;
-  border-radius: 0;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #ffffff;
-  border-radius: 0;
-  cursor: pointer;
-  box-shadow: none;
-  transition: background 0.15s;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover { background: var(--amber); }
-
-.range-labels {
-  display: flex;
-  justify-content: space-between;
-  font-family: 'Fira Code', monospace;
-  font-size: 9px;
-  color: var(--mist);
-  margin-top: 5px;
-  font-weight: 500;
-}
-
-/* ── RESULTS ──────────────────────────────────── */
 .big-result {
-  margin-bottom: 24px;
-  padding-bottom: 24px;
-  border-bottom: 2px solid var(--border);
+  text-align: center;
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px dashed rgba(255,255,255,0.15);
+  position: relative;
+  z-index: 1;
 }
 
 .result-label {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: var(--slate);
-  margin-bottom: 8px;
+  color: var(--mist);
+  margin-bottom: 12px;
 }
 
 .result-value {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(42px, 6vw, 58px);
+  font-size: clamp(36px, 6vw, 52px);
   font-weight: 400;
   color: var(--amber);
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(245,158,11,0.3);
 }
-
-.result-value.blue  { color: var(--teal); }
-.result-value.brown { color: var(--ink-soft); }
-.result-value.gold  { color: var(--green); }
 
 .stat {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--smoke);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: relative;
+  z-index: 1;
 }
 .stat:last-child { border-bottom: none; }
 
-.stat-l { font-size: 12px; font-weight: 600; color: var(--ink-soft); }
-.stat-r { font-family: 'Fira Code', monospace; font-size: 14px; font-weight: 600; color: var(--ink); }
-.stat-r.g    { color: var(--green); }
-.stat-r.r    { color: var(--red); }
-.stat-r.b    { color: var(--teal); }
+.stat-l { font-size: 14px; font-weight: 500; color: var(--mist); }
+.stat-r { 
+  font-family: 'Fira Code', monospace; 
+  font-size: 16px; 
+  font-weight: 600; 
+  color: var(--white); 
+}
+.stat-r.g { color: var(--green); }
+.stat-r.b { color: var(--teal); }
 .stat-r.gold { color: var(--amber); }
 
-.bar-track { height: 6px; background: #ffffff; overflow: hidden; margin: 16px 0 8px; }
-.bar-fill  { height: 100%; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); background: var(--amber); }
-.bar-fill.blue { background: var(--teal); }
-
-.calc-btn {
-  width: 100%;
-  background: #ffffff;
-  color: var(--white);
-  border: 2px solid var(--ink);
-  padding: 14px;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  cursor: pointer;
-  margin-top: 16px;
-  transition: all 0.15s;
-  box-shadow: 4px 4px 0 var(--amber);
-}
-.calc-btn:hover {
-  background: var(--amber);
-  color: var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-
-/* ── AMORTIZATION ─────────────────────────────── */
-.toggle-btn {
-  width: 100%;
-  background: transparent;
-  border: 2px dashed var(--border);
-  padding: 12px;
-  color: var(--slate);
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 14px;
-  letter-spacing: 2px;
-  cursor: pointer;
-  margin-top: 14px;
-  transition: all 0.15s;
-}
-.toggle-btn:hover { border-color: var(--amber); color: var(--ink); background: #fffbf2; }
-.table-wrap { display:none; margin-top:8px; background:var(--white); border:2px solid var(--ink); overflow:hidden; max-height:280px; overflow-y:auto; }
-.table-wrap.open { display:block; }
-table { width:100%; border-collapse:collapse; font-family:'Fira Code',monospace; font-size:11px; }
-th { background:#ffffff; color:var(--ink); font-weight:600; letter-spacing:1px; text-transform:uppercase; padding:10px 14px; text-align:right; position:sticky; top:0; font-size:10px; }
-th:first-child { text-align:left; }
-td { padding:9px 14px; text-align:right; border-top:1px solid var(--smoke); color:var(--ink-soft); }
-td:first-child { text-align:left; color:var(--mist); }
-td.g { color:var(--green); font-weight:700; }
-td.r { color:var(--red); font-weight:700; }
-tr:hover td { background:#ffffff; }
-
 /* ── CONTENT SECTIONS ─────────────────────────── */
+.content-wrapper {
+  max-width: 800px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+
 .content-section {
-  background: #ffffff;
-  border: 1px solid #e2e5f0;
-  border-radius: 0 0 12px 12px;
-  padding: 36px 32px;
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
 }
 
 .content-section h3 {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  letter-spacing: 2px;
+  font-size: 24px;
+  letter-spacing: 1.5px;
   color: var(--ink);
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--amber);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--amber-lt);
   display: inline-block;
 }
 
 .content-section p {
-  font-size: 14px;
-  font-weight: 400;
-  color: var(--ink-soft);
-  line-height: 1.8;
-  margin-bottom: 16px;
-  max-width: 720px;
-}
-
-.content-section ul, .content-section ol {
-  padding-left: 20px;
-  margin-bottom: 16px;
-}
-
-.content-section li {
-  font-size: 14px;
-  color: var(--ink-soft);
-  line-height: 1.8;
-  margin-bottom: 6px;
-  font-weight: 400;
-}
-
-.content-section li strong { color: var(--ink); font-weight: 700; }
-
-/* ── FAQ ──────────────────────────────────────── */
-.faq-item {
-  border-left: 3px solid var(--amber);
-  padding: 20px 0 20px 20px;
-  margin-bottom: 20px;
-  background: #ffffff;
-}
-.faq-item:last-child { margin-bottom: 0; }
-
-.faq-q {
-  font-family: 'DM Sans', sans-serif;
   font-size: 15px;
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-
-.faq-a {
-  font-size: 14px;
-  color: var(--ink-soft);
+  color: var(--ink-mid);
   line-height: 1.8;
-  font-weight: 400;
-  display: block;
-  max-width: 680px;
+  margin-bottom: 16px;
 }
+.content-section p strong { color: var(--ink); font-weight: 700; }
 
-/* ── HOW IT WORKS ─────────────────────────────── */
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-  gap: 12px;
-  background: transparent;
-  border: none;
-  margin: 20px 0;
-}
-
-.step {
-  background: #ffffff;
-  border: 1px solid #e2e5f0;
-  border-radius: 12px;
-  padding: 24px 20px;
-  position: relative;
-}
-
-.step-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 48px;
-  color: var(--amber);
-  letter-spacing: 1px;
-  line-height: 1;
-  margin-bottom: 8px;
-}
-
-.step-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--ink);
-  margin-bottom: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.step-desc {
-  font-size: 12px;
-  color: var(--slate);
-  line-height: 1.6;
-  font-weight: 400;
-}
-
-/* ── KEY STATS STRIP ──────────────────────────── */
+/* Key Stats */
 .key-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
-  gap: 12px;
-  background: transparent;
-  border: none;
-  margin: 20px 0;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin: 24px 0;
 }
-
 .key-stat {
-  background: #ffffff;
+  background: var(--smoke);
+  border-radius: var(--radius-sm);
   padding: 20px;
   text-align: center;
 }
-
 .key-stat-val {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
+  font-size: 28px;
   color: var(--amber);
-  letter-spacing: 1px;
   line-height: 1;
+  margin-bottom: 4px;
 }
-
 .key-stat-lbl {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--slate);
-  margin-top: 4px;
+  letter-spacing: 0.5px;
+  color: var(--ink-soft);
 }
 
-/* ── VISUAL DONUT CHART ───────────────────────── */
-.donut-wrap {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  margin: 16px 0;
-  flex-wrap: wrap;
-}
-
-.donut-svg { flex-shrink: 0; }
-
-.donut-legend { display: flex; flex-direction: column; gap: 10px; }
-.donut-legend-item { display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
-.donut-dot { width: 12px; height: 12px; border-radius: 0; flex-shrink: 0; }
-
-/* ── TIPS BOX ─────────────────────────────────── */
+/* Tip Box */
 .tip-box {
-  background: #fffbf2;
+  background: var(--amber-lt);
   border-left: 4px solid var(--amber);
-  padding: 18px 20px;
-  margin: 20px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px 24px;
+  margin-top: 24px;
 }
-
 .tip-box-title {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: var(--amber);
+  color: var(--ink);
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
-
 .tip-box p {
-  font-size: 13px;
-  color: var(--ink-soft);
+  font-size: 14px;
+  color: var(--ink-mid);
   line-height: 1.7;
-  font-weight: 400;
   margin-bottom: 0 !important;
-  max-width: 100% !important;
 }
 
-/* ── AD SLOT ──────────────────────────────────── */
-.ad-slot {
-  margin: 24px 0;
-  text-align: center;
-  min-height: 90px;
-  overflow: hidden;
+/* FAQ (Native Details/Summary) */
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
+
+details {
+  padding: 20px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+details[open] { background: rgba(245,158,11,0.03); margin: 0 -40px; padding: 20px 40px; }
+
+summary {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after {
+  content: '+';
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--amber);
+  transition: transform 0.2s;
+}
+details[open] summary::after { content: '−'; }
+
+.faq-a {
+  font-size: 14px;
+  color: var(--ink-mid);
+  line-height: 1.8;
+  margin-top: 12px;
+  padding-right: 40px;
 }
 
 /* ── RELATED CARDS ────────────────────────────── */
+.related-section {
+  max-width: 1280px;
+  margin: 0 auto 80px;
+  padding: 0 24px;
+}
+.related-section h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 24px;
+  letter-spacing: 1.5px;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
 .related-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
-  gap: 12px;
-  background: transparent;
-  border: none;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
 }
-
 .related-card {
-  background: #ffffff;
-  border: 1px solid #e2e5f0;
-  border-radius: 14px;
-  padding: 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 12px;
-  transition: all 0.15s;
+  gap: 14px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
 }
-
-.related-card:hover { background: #fffdf5; border-color: var(--amber); }
-
+.related-card:hover { 
+  border-color: var(--amber); 
+  transform: translateY(-2px); 
+  box-shadow: var(--shadow-md);
+}
 .related-card-icon {
-  font-size: 22px;
-  width: 40px;
-  height: 40px;
-  background: #ffffff;
+  font-size: 24px;
+  width: 44px; height: 44px;
+  background: var(--smoke);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
   flex-shrink: 0;
-  border: 1px solid var(--border);
 }
-
 .related-card h4 {
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--ink);
-  margin-bottom: 2px;
+  line-height: 1.3;
 }
-
-.related-card p {
-  font-size: 11px;
-  color: var(--slate);
-  font-weight: 500;
-}
-
-/* ── BREADCRUMB ───────────────────────────────── */
-.breadcrumb {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: var(--slate);
-  margin-bottom: 10px;
-}
-.breadcrumb a { color: var(--amber); text-decoration: none; }
-.breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb span { color: var(--slate); margin: 0 6px; }
 
 /* ── FOOTER ───────────────────────────────────── */
 footer {
-  background: #ffffff;
-  border-top: 1px solid #e2e5f0;
-  padding: 48px 40px 32px;
-  margin-top: 80px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 60px 24px 32px;
 }
-
 .footer-inner { max-width: 1280px; margin: 0 auto; }
-
 .footer-top {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: start;
+  grid-template-columns: auto 1fr;
   gap: 48px;
-  margin-bottom: 32px;
-  flex-wrap: wrap;
+  margin-bottom: 40px;
 }
-
-@media(max-width:768px){ .footer-top{ grid-template-columns:1fr; gap:24px; } }
-
 .footer-logo {
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 36px;
+  font-size: 32px;
   letter-spacing: 2px;
   color: var(--ink);
   line-height: 1;
 }
-
 .footer-tagline {
-  font-size: 12px;
+  font-size: 13px;
   color: var(--ink-soft);
-  margin-top: 6px;
+  margin-top: 8px;
   font-weight: 500;
 }
-
+.footer-links {
+  display: flex;
+  gap: 48px;
+  flex-wrap: wrap;
+}
 .footer-links-group h4 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 14px;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: var(--ink);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
-
 .footer-links-group a {
   display: block;
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
-  margin-bottom: 8px;
-  transition: color 0.15s;
+  margin-bottom: 10px;
+  transition: color 0.2s;
 }
-
-.footer-links-group a:hover { color: var(--ink); text-decoration: underline; }
+.footer-links-group a:hover { color: var(--amber); }
 
 .footer-bottom {
-  border-top: 1px solid #e2e5f0;
-  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
-
 .footer-copy {
-  font-size: 11px;
-  color: var(--slate);
+  font-size: 12px;
+  color: var(--ink-soft);
   font-weight: 500;
   line-height: 1.6;
+  max-width: 600px;
+}
+.footer-legal { display: flex; gap: 20px; }
+.footer-legal a {
+  font-size: 12px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-decoration: none;
+}
+.footer-legal a:hover { color: var(--ink); text-decoration: underline; }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 768px) {
+  .top-bar { font-size: 10px; padding: 8px 16px; gap: 8px; flex-wrap: wrap; }
+  nav { padding: 0 16px; height: 56px; }
+  .logo-main { font-size: 24px; }
+  .nav-links { display: none; }
+  
+  .page-header { padding: 24px 16px 32px; }
+  .page-header h1 { font-size: 36px; }
+  
+  .calc-container { margin-top: -20px; padding: 0 16px; }
+  .calc-grid { grid-template-columns: 1fr; }
+  .input-side { border-right: none; border-bottom: 1px solid var(--border); padding: 24px; }
+  .result-side { padding: 24px; }
+  
+  .content-section { padding: 24px; }
+  details[open] { margin: 0 -24px; padding: 16px 24px; }
+  .faq-a { padding-right: 0; }
+  
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .footer-links { gap: 32px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
 
-/* ── UTILITIES ────────────────────────────────── */
-.pulse { animation: pulse 0.25s ease; }
-@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.02)} }
-
-
-/* ═══════════════════════════════════════════════
-   RESPONSIVE — Desktop / Tablet / Mobile
-═══════════════════════════════════════════════ */
-
-/* ── DESKTOP (1024px+) ────────────────────────── */
-@media (min-width: 1024px) {
-  .grid { grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); }
-  .hero h1 { font-size: 88px; }
-  .content-inner { grid-template-columns: 1fr 1fr; }
-}
-
-/* ── TABLET (768px – 1023px) ──────────────────── */
-@media (min-width: 768px) and (max-width: 1023px) {
-  nav { padding: 0 24px; height: 64px; }
-  .logo-main { font-size: 26px; }
-  .hero { padding: 56px 24px 48px; }
-  .hero h1 { font-size: 64px; letter-spacing: 2px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
-  .hero-roo { font-size: 72px; }
-  .hero-stats { gap: 20px; }
-  .grid-section { padding: 0 24px 48px; }
-  .grid { grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); }
-  .calc-panel { padding: 0 24px; }
-  .calc-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
-  .box { padding: 22px; }
-  .panel-header { padding: 22px 24px; }
-  .result-value { font-size: 40px; }
-  .content-inner { grid-template-columns: 1fr; gap: 32px; }
-  .steps { grid-template-columns: repeat(2, 1fr); }
-  .key-stats { grid-template-columns: repeat(2, 1fr); }
-  footer { padding: 40px 24px 28px; }
-  .footer-top { grid-template-columns: 1fr; gap: 28px; }
-  .related-grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-/* ── MOBILE (up to 767px) ─────────────────────── */
-@media (max-width: 767px) {
-  /* Nav */
-  nav {
-    padding: 0 14px;
-    height: auto;
-    min-height: 56px;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-  }
-  .logo-main { font-size: 22px; letter-spacing: 1px; }
-  .logo-o { width: 18px; height: 18px; font-size: 11px; }
-  .logo-dot { font-size: 10px; }
-  .nav-links {
-    width: 100%;
-    overflow-x: auto;
-    scrollbar-width: none;
-    gap: 0;
-    padding-bottom: 2px;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-link { font-size: 11px; padding: 5px 10px; }
-  .nav-currency { font-size: 10px; padding: 5px 8px; margin-left: 4px; }
-
-  /* Top bar */
-  .top-bar { font-size: 10px; padding: 7px 14px; gap: 10px; flex-wrap: wrap; justify-content: center; }
-
-  /* Hero */
-  .hero { padding: 36px 16px 32px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 16px; }
-  .hero-roo { font-size: 64px; text-align: center; }
-  .hero h1 { font-size: clamp(40px, 12vw, 58px); letter-spacing: 1px; }
-  .hero-badge { font-size: 10px; padding: 5px 10px; }
-  .hero-sub { font-size: 14px; }
-  .hero-stats { gap: 12px; }
-  .hero-stat-num { font-size: 28px; }
-  .hero-stat { padding-left: 12px; }
-  .hero-bg-text { display: none; }
-
-  /* Sections */
-  .grid-section { padding: 0 14px 40px; }
-  .section-header { padding: 28px 0 14px; gap: 10px; }
-  .section-label { font-size: 20px; }
-  .section-icon { width: 30px; height: 30px; font-size: 15px; }
-  .grid { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .calc-card { padding: 14px 12px; gap: 10px; }
-  .card-icon { width: 34px; height: 34px; font-size: 16px; }
-  .card-info h3 { font-size: 12px; }
-  .card-info p { font-size: 10px; display: none; }
-
-  /* Calculator panel */
-  .calc-panel { padding: 0 14px; margin-bottom: 40px; }
-  .panel-header { padding: 16px; gap: 12px; flex-direction: column; align-items: flex-start; }
-  .panel-icon { width: 44px; height: 44px; font-size: 22px; }
-  .panel-header h2 { font-size: 24px; letter-spacing: 1px; }
-  .panel-header p { font-size: 12px; }
-  .calc-grid { grid-template-columns: 1fr; gap: 1px; }
-  .box { padding: 18px 16px; }
-  .box-title { font-size: 11px; margin-bottom: 16px; }
-  label { font-size: 10px; margin-bottom: 6px; }
-  input[type="number"], select { font-size: 15px; padding: 10px 12px 10px 32px; }
-  input[type="number"].no-prefix, select.no-prefix { padding-left: 12px; }
-  .prefix { font-size: 12px; left: 12px; }
-  .result-value { font-size: clamp(32px, 10vw, 44px); }
-  .result-label { font-size: 9px; letter-spacing: 1.5px; }
-  .stat-l { font-size: 11px; }
-  .stat-r { font-size: 12px; }
-
-  /* Content sections */
-  .content-section { padding: 24px 16px; }
-  .content-section h3 { font-size: 18px; }
-  .content-section p { font-size: 13px; }
-  .content-inner { grid-template-columns: 1fr !important; gap: 24px; }
-  .steps { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .step { padding: 16px 14px; }
-  .step-num { font-size: 36px; }
-  .key-stats { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .key-stat { padding: 14px; }
-  .key-stat-val { font-size: 24px; }
-  .faq-q { font-size: 13px; }
-  .faq-a { font-size: 13px; }
-  .tip-box { padding: 14px 16px; }
-
-  /* Related */
-  .related-grid { grid-template-columns: 1fr 1fr; gap: 1px; }
-  .related-card { padding: 12px; gap: 8px; }
-  .related-card h4 { font-size: 11px; }
-  .related-card p { display: none; }
-
-  /* Footer */
-  footer { padding: 32px 16px 24px; margin-top: 40px; }
-  .footer-logo { font-size: 28px; }
-  .footer-top { grid-template-columns: 1fr; gap: 24px; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-
-  /* Tables */
-  table { font-size: 10px; }
-  th, td { padding: 7px 10px; }
-
-  /* Amortization toggle */
-  .toggle-btn { font-size: 11px; }
-
-  /* Ad slots */
-  .ad-slot { padding: 14px; font-size: 11px; margin: 16px 0; }
-
-  /* Scientific calculator */
-  .sci-btn { padding: 10px 6px; font-size: 12px; }
-}
-
-/* ── SMALL MOBILE (up to 380px) ───────────────── */
 @media (max-width: 380px) {
-  .grid { grid-template-columns: 1fr; }
-  .calc-card { padding: 12px; }
-  .hero h1 { font-size: 38px; }
-  .steps { grid-template-columns: 1fr; }
-  .key-stats { grid-template-columns: 1fr 1fr; }
-  .related-grid { grid-template-columns: 1fr; }
-  .nav-link { font-size: 10px; padding: 4px 8px; }
+  .result-value { font-size: 36px; }
+  .stat-r { font-size: 14px; }
+  .key-stats { grid-template-columns: 1fr; }
 }
 </style>
+
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6108324382808705" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <div class="top-bar">
-  <strong>🦘 Calcularoo</strong>
+  <strong>🦘 CALCULAROO</strong>
   <span class="top-bar-dot">·</span>
-  <span>50 Free Calculators</span>
+  <span>50+ Free Tools</span>
   <span class="top-bar-dot">·</span>
-  <span>No Signup Required</span>
+  <span>No Signup</span>
   <span class="top-bar-dot">·</span>
-  <span>Trusted Globally</span>
+  <span>100% Private</span>
 </div>
+
 <nav>
   <a href="/index.html" class="logo-wrap">
-    <div style="display:flex;align-items:baseline;gap:0">
-      <span class="logo-main">CALCULAR</span><span class="logo-oo"><span class="logo-o">O</span><span class="logo-o">O</span></span><span class="logo-dot">.com</span>
-    </div>
+    <span class="logo-main">CALCULAR</span><span class="logo-oo"><span class="logo-o">O</span><span class="logo-o">O</span></span><span class="logo-dot">.com</span>
   </a>
   <div class="nav-links">
     <a href="/index.html" class="nav-link">All</a>
@@ -1193,1090 +645,250 @@ footer {
     <a href="/health.html" class="nav-link">Health</a>
     <a href="/home.html" class="nav-link">Property</a>
     <a href="/utility.html" class="nav-link active">Utility</a>
-    <a href="/math.html" class="nav-link">Math</a>
-    <a href="/life.html" class="nav-link">Life</a>
-    
-    <select id="currency-select" class="nav-currency" onchange="setCurrency(this.value)">
-      <option value="$">🇺🇸 USD $</option>
-      <option value="£">🇬🇧 GBP £</option>
-      <option value="€">🇪🇺 EUR €</option>
-      <option value="R">🇿🇦 ZAR R</option>
-      <option value="A$">🇦🇺 AUD</option>
-      <option value="C$">🇨🇦 CAD</option>
-      <option value="¥">🇯🇵 JPY</option>
-      <option value="₹">🇮🇳 INR</option>
-      <option value="S$">🇸🇬 SGD</option>
-    </select>
   </div>
 </nav>
 
-<div style="background:#ffffff;padding:28px 40px 24px;border-bottom:1px solid #e2e5f0">
-  <div style="max-width:1280px;margin:0 auto">
-    <div class="breadcrumb"><a href="/index.html">Home</a><span>›</span><a href="/utility.html">Utility</a><span>›</span>Age Calculator</div>
-    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,56px);letter-spacing:3px;color:var(--ink);line-height:1;margin-bottom:8px">🎂 Age Calculator</h1>
-    <p style="color:var(--ink-soft);font-size:14px;font-weight:500;max-width:600px;line-height:1.7">Calculate your exact age in years, months and days from your date of birth.</p>
-  </div>
+<div class="page-header">
+  <div class="breadcrumb"><a href="/index.html">Home</a><span>›</span><a href="/utility.html">Utility</a><span>›</span>Age Calculator</div>
+  <h1>🎂 Age Calculator</h1>
+  <p>Calculate your exact age in years, months, and days from your date of birth. Handles leap years automatically.</p>
 </div>
 
-<div style="max-width:1280px;margin:0 auto;padding:28px 40px 0">
-  <div class="ad-slot"><ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6108324382808705"
-     data-ad-slot="auto"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
-  <div class="calc-panel open" style="display:block!important" id="panel-age">
-  <div class="panel-header"><div><h2>🎂 Age Calculator</h2><p>Your exact age in years, months and days</p></div></div>
-  <div class="calc-grid">
-    <div class="box">
-      <div class="box-title">Date of Birth</div>
-      <div class="field"><label>Your Birthday</label><input type="date" id="age-dob" class="no-prefix" style="padding:11px 13px;width:100%;background:#ffffff;border:2px solid #e2e5f0;border-radius:0;color:#0a0e1a;font-family:'Fira Code',monospace;font-size:15px;font-weight:500;outline:none;" oninput="calcAge()"></div>
-    </div>
-    <div class="box">
-      <div class="big-result"><div class="result-label">Your Age</div><div class="result-value" id="age-years" style="font-size:36px">Enter birthday</div></div>
-      <div class="stat"><span class="stat-l">Months Old</span><span class="stat-r g" id="age-months">—</span></div>
-      <div class="stat"><span class="stat-l">Days Old</span><span class="stat-r b" id="age-days">—</span></div>
-      <div class="stat"><span class="stat-l">Next Birthday</span><span class="stat-r gold" id="age-next">—</span></div>
-    </div>
-  </div>
-</div>
-  <div class="content-section" style="border-top:2px solid var(--border)">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;flex-wrap:wrap" class="content-inner">
-    <div>
-      <h3>About This Calculator</h3>
-      <p>This free calculator gives you instant, accurate results with no signup required. Use it to make smarter, more informed financial and life decisions.</p>
-      <h3 style="margin-top:28px">How It Works</h3>
-      <div class="steps"><div class="step"><div class="step-num">01</div><div class="step-title">Enter Your Values</div><div class="step-desc">Fill in the input fields with your information.</div></div><div class="step"><div class="step-num">02</div><div class="step-title">Adjust Settings</div><div class="step-desc">Use the sliders or dropdowns to customise.</div></div><div class="step"><div class="step-num">03</div><div class="step-title">See Instant Results</div><div class="step-desc">Results update automatically as you type.</div></div><div class="step"><div class="step-num">04</div><div class="step-title">Make Better Decisions</div><div class="step-desc">Use the results to plan smarter.</div></div></div>
-    </div>
-    <div>
-      <h3>Key Numbers</h3>
-      <div class="key-stats"><div class="key-stat"><div class="key-stat-val">100%</div><div class="key-stat-lbl">Free to Use</div></div><div class="key-stat"><div class="key-stat-val">Instant</div><div class="key-stat-lbl">Results</div></div><div class="key-stat"><div class="key-stat-val">No Signup</div><div class="key-stat-lbl">Required</div></div><div class="key-stat"><div class="key-stat-val">9+</div><div class="key-stat-lbl">Currencies</div></div></div>
-      <div class="tip-box" style="margin-top:24px">
-        <div class="tip-box-title">💡 Pro Tip</div>
-        <p>Always double-check important financial decisions with a qualified professional. This calculator provides estimates for guidance purposes. Results may vary based on your specific circumstances.</p>
+<div class="calc-container">
+  <div class="calc-card">
+    <div class="calc-grid">
+      <!-- Input Side -->
+      <div class="input-side">
+        <div class="box-title">Enter Your Date of Birth</div>
+        
+        <div class="field">
+          <label>Your Birthday</label>
+          <div class="input-wrap">
+            <input type="date" id="age-dob" oninput="calcAge()" max="">
+          </div>
+          <div class="input-hint">
+            Select your exact date of birth from the calendar picker. We'll handle leap years and varying month lengths automatically.
+          </div>
+        </div>
+      </div>
+
+      <!-- Result Side (Digital ID Style) -->
+      <div class="result-side">
+        <div class="big-result">
+          <div class="result-label">Your Exact Age</div>
+          <div class="result-value" id="age-years">Select a date</div>
+        </div>
+        
+        <div class="stat">
+          <span class="stat-l">Total Months</span>
+          <span class="stat-r g" id="age-months">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-l">Total Days</span>
+          <span class="stat-r b" id="age-days">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-l">Next Birthday</span>
+          <span class="stat-r gold" id="age-next">—</span>
+        </div>
       </div>
     </div>
   </div>
-  <div class="content-section" style="border-top: 2px solid var(--border); margin-top: 32px;">
-    <h3>Why Your 'Exact' Age Matters More Than You Think</h3>
-    <p>Most people only think about age in whole years, but precise age calculations matter for several practical situations — eligibility cutoffs for school enrollment, certain legal milestones, insurance calculations, and even some sports age-group classifications often depend on exact dates, not just birth year.</p>
-<p><strong>Age calculations get surprisingly tricky around leap years and month-length differences.</strong> Someone born on February 29th technically has a birthday only once every four years, creating edge cases that simple subtraction (current year minus birth year) gets wrong.</p>
-<p>Knowing your age in total days or months can also be a fun or meaningful way to mark milestones — your 10,000th day alive, for instance, falls at roughly 27 years and 4 months old, a milestone many people don't realize until calculating it directly.</p>
-<p>Use the calculator above for precise age calculations in years, months, and days — useful for official forms, milestone tracking, or simply satisfying curiosity about exactly how long you've been alive.</p>
+</div>
+
+<div class="content-wrapper">
+  <!-- Key Stats -->
+  <div class="content-section">
+    <h3>Why Use This Calculator?</h3>
+    <div class="key-stats">
+      <div class="key-stat">
+        <div class="key-stat-val">100%</div>
+        <div class="key-stat-lbl">Leap Year Aware</div>
+      </div>
+      <div class="key-stat">
+        <div class="key-stat-val">Precise</div>
+        <div class="key-stat-lbl">To The Day</div>
+      </div>
+      <div class="key-stat">
+        <div class="key-stat-val">Instant</div>
+        <div class="key-stat-lbl">No Refresh</div>
+      </div>
+      <div class="key-stat">
+        <div class="key-stat-val">Private</div>
+        <div class="key-stat-lbl">Runs in Browser</div>
+      </div>
+    </div>
+    
+    <div class="tip-box">
+      <div class="tip-box-title">💡 Did You Know?</div>
+      <p>Your 10,000th day alive is a fun milestone that falls at roughly 27 years and 4 months old! It's also the precise age calculation that matters for school enrollment cutoffs, legal milestones, and sports age-group classifications.</p>
+    </div>
   </div>
 
-  <div style="margin-top:40px">
+  <!-- FAQ -->
+  <div class="content-section">
     <h3>Frequently Asked Questions</h3>
-    <div style="margin-top:16px">
-      <div class="faq-item"><div class="faq-q">Is this calculator free?</div><div class="faq-a">Yes, completely free. No signup, no subscription, no hidden fees. Calcularoo.com is ad-supported and always free to use.</div></div><div class="faq-item"><div class="faq-q">How accurate are the results?</div><div class="faq-a">Our calculators use industry-standard formulas and are accurate for general planning purposes. For major financial decisions, always consult a qualified professional.</div></div><div class="faq-item"><div class="faq-q">Can I use different currencies?</div><div class="faq-a">Yes! Use the currency selector in the navigation bar to switch between USD, GBP, EUR, ZAR, AUD, CAD, JPY, INR and SGD.</div></div><div class="faq-item"><div class="faq-q">Do you store my data?</div><div class="faq-a">No. All calculations happen entirely in your browser. We never collect or store any personal data you enter into our calculators.</div></div>
+    
+    <div class="faq-item">
+      <details>
+        <summary>How does this handle leap years?</summary>
+        <div class="faq-a">If you were born on February 29th, the calculator accurately accounts for the extra day. In non-leap years, it calculates your birthday as March 1st for legal and mathematical precision, matching standard calendar logic.</div>
+      </details>
+    </div>
+    
+    <div class="faq-item">
+      <details>
+        <summary>Is my date of birth stored or tracked?</summary>
+        <div class="faq-a">Absolutely not. All calculations happen instantly in your web browser using JavaScript. We never collect, store, or transmit your date of birth or any other personal data.</div>
+      </details>
+    </div>
+    
+    <div class="faq-item">
+      <details>
+        <summary>Can I calculate the age between two specific dates?</summary>
+        <div class="faq-a">This tool is optimized for calculating your age from birth to today. If you need to calculate the duration between two historical dates, check out our <a href="/date-calculator.html" style="color:var(--amber);text-decoration:underline">Date Range Calculator</a>.</div>
+      </details>
     </div>
   </div>
 </div>
-  <div class="ad-slot"><ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-6108324382808705"
-     data-ad-slot="auto"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+
+<div class="related-section">
+  <h3>Related Calculators</h3>
+  <div class="related-grid">
+    <a href="/date-calculator.html" class="related-card">
+      <div class="related-card-icon">📅</div>
+      <div><h4>Date Range Calculator</h4></div>
+    </a>
+    <a href="/percentage-calculator.html" class="related-card">
+      <div class="related-card-icon">✏️</div>
+      <div><h4>Percentage Calculator</h4></div>
+    </a>
+    <a href="/gpa-calculator.html" class="related-card">
+      <div class="related-card-icon">🎓</div>
+      <div><h4>GPA Calculator</h4></div>
+    </a>
+    <a href="/time-zone-converter.html" class="related-card">
+      <div class="related-card-icon">🌍</div>
+      <div><h4>Time Zone Converter</h4></div>
+    </a>
+  </div>
 </div>
-<div style="padding:0 40px 60px;max-width:1280px;margin:0 auto">
-  <h3 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:2px;color:var(--ink);margin-bottom:14px">Related Calculators</h3>
-  <div class="related-grid"><a href="/tip-calculator.html" class="related-card"><div class="related-card-icon">🍽️</div><div><h4>Tip Calculator</h4></div></a>
-<a href="/percentage-calculator.html" class="related-card"><div class="related-card-icon">✏️</div><div><h4>Percentage Calculator</h4></div></a>
-<a href="/gpa-calculator.html" class="related-card"><div class="related-card-icon">🎓</div><div><h4>GPA Calculator</h4></div></a>
-</div>
-</div>
+
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div>
         <div class="footer-logo">CALCULAROO</div>
-        <div class="footer-tagline">Calculate Everything, Everywhere</div>
+        <div class="footer-tagline">Calculate Everything, Everywhere.<br>Free, private, and instant.</div>
       </div>
-      <div style="display:flex;gap:48px;flex-wrap:wrap">
+      <div class="footer-links">
         <div class="footer-links-group">
           <h4>Finance</h4>
           <a href="/loan-calculator.html">Loan Calculator</a>
           <a href="/mortgage-calculator.html">Mortgage Calculator</a>
           <a href="/compound-interest-calculator.html">Compound Interest</a>
-          <a href="/retirement-savings-calculator.html">Retirement Savings</a>
-          <a href="/budget-calculator.html">Budget Calculator</a>
           <a href="/finance.html">All Finance Tools →</a>
         </div>
         <div class="footer-links-group">
-          <h4>Health</h4>
-          <a href="/bmi-calculator.html">BMI Calculator</a>
-          <a href="/calorie-calculator.html">Calorie Calculator</a>
-          <a href="/macro-calculator.html">Macro Calculator</a>
-          <a href="/sleep-calculator.html">Sleep Calculator</a>
-          <a href="/water-intake-calculator.html">Water Intake</a>
-          <a href="/health.html">All Health Tools →</a>
-        </div>
-        <div class="footer-links-group">
-          <h4>More Tools</h4>
-          <a href="/home-affordability-calculator.html">Home Affordability</a>
+          <h4>Everyday Utility</h4>
           <a href="/tip-calculator.html">Tip Calculator</a>
           <a href="/unit-converter.html">Unit Converter</a>
-          <a href="/scientific-calculator.html">Scientific Calculator</a>
           <a href="/time-zone-converter.html">Time Zone Converter</a>
-          <a href="/index.html">All 50 Calculators →</a>
+          <a href="/utility.html">All Utility Tools →</a>
+        </div>
+        <div class="footer-links-group">
+          <h4>Company</h4>
+          <a href="/about.html">About Us</a>
+          <a href="/contact.html">Contact</a>
+          <a href="/privacy.html">Privacy Policy</a>
+          <a href="/terms.html">Terms of Use</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <div class="footer-copy">© 2026 Calcularoo.com — Calculate Everything, Everywhere. All results are estimates only and do not constitute financial, medical or legal advice. Always consult a qualified professional before making major decisions.</div>
-      <div style="display:flex;gap:16px">
-        <a href="#" style="font-size:11px;color:#3d4663;font-weight:600;text-decoration:none">Privacy</a>
-        <a href="#" style="font-size:11px;color:#3d4663;font-weight:600;text-decoration:none">Terms</a>
-        <a href="#" style="font-size:11px;color:#3d4663;font-weight:600;text-decoration:none">Advertise</a>
-        <a href="#" style="font-size:11px;color:#3d4663;font-weight:600;text-decoration:none">Contact</a>
+      <div class="footer-copy">© 2026 Calcularoo.com. All results are estimates for guidance purposes only and do not constitute legal or official advice.</div>
+      <div class="footer-legal">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/sitemap.xml">Sitemap</a>
       </div>
     </div>
   </div>
 </footer>
+
 <script>
-let currencySymbol = '$';
+// Set max date to today to prevent future date selection
+document.getElementById('age-dob').max = new Date().toISOString().split('T')[0];
 
-function setCurrency(sym) {
-  currencySymbol = sym;
-  document.querySelectorAll('.prefix[data-type="currency"]').forEach(el => { el.textContent = sym; });
-  const fnmap = {loan:calcLoan,mortgage:calcMortgage,compound:calcCI,credit:calcCC,budget:calcBudget,retirement:calcRetirement,bmi:calcBMI,calorie:calcCalorie,macro:calcMacro,pregnancy:calcPreg,afford:calcAfford,rent:calcRB,tip:calcTip,age:calcAge,percent:calcPct,gpa:calcGPA,savings:calcSavings,debt:calcDTI,networth:calcNetWorth,inflation:calcInflation,salary:calcSalary,tax:calcTaxEst,roi:calcROI,emergency:calcEF,car:calcCar,stockreturn:calcStock,water:calcWater,bodyfat:calcBodyFat,heartrate:calcHR,sleep:calcSleep,idealweight:calcIW,steps:calcSteps,rental:calcRY,stamp:calcStamp,renovate:calcReno,paint:calcPaint,fuel:calcFuel,discount:calcDiscount,split:calcSplit,grade:calcGrade,speed:calcSpeed};
-  if (typeof currentPanel !== 'undefined' && currentPanel && fnmap[currentPanel]) try { fnmap[currentPanel](); } catch(e) {}
-}
-
-let fmt = n => currencySymbol + Math.round(n).toLocaleString();
-let fmtD = n => currencySymbol + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-const fmtN = n => n.toLocaleString();
-const v = id => { const e = document.getElementById(id); return e ? parseFloat(e.value) || 0 : 0; };
-const el = id => document.getElementById(id) || { textContent:"", innerHTML:"", style:{}, className:"", classList:{add:()=>{},remove:()=>{},toggle:()=>{},contains:()=>false} };
-
-function syncR(inputId, range) { el(inputId).value = range.value; }
-
-// bind input→range sync
-document.querySelectorAll('input[type="number"]').forEach(inp => {
-  inp.addEventListener('input', () => {
-    const rangeId = inp.id + '-range';
-  });
-});
-
-let currentPanel = null;
-
-function openCalc(id) {
-  // close current
-  document.querySelectorAll('.calc-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.calc-card').forEach(c => c.classList.remove('active'));
-  const panel = document.getElementById('panel-' + id);
-  if (!panel) return;
-  panel.classList.add('open');
-  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  currentPanel = id;
-  // trigger calc
-  const fns = {loan:calcLoan,mortgage:calcMortgage,compound:calcCI,credit:calcCC,budget:calcBudget,retirement:calcRetirement,bmi:calcBMI,calorie:calcCalorie,macro:calcMacro,pregnancy:calcPreg,afford:calcAfford,rent:calcRB,tip:calcTip,age:calcAge,percent:calcPct,gpa:calcGPA};
-  if(fns[id]) fns[id]();
-  if(id==='gpa' && el('gpa-courses').children.length === 0) { addGPACourse(); addGPACourse(); addGPACourse(); }
-}
-
-function toggleTable(id) { el(id).classList.toggle('open'); }
-
-function filterCat(cat, el) {
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  if(el) el.classList.add('active');
-  document.querySelectorAll('.calc-card').forEach(c => {
-    c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
-  });
-  // Show/hide section headers
-  document.querySelectorAll('.section-header').forEach(h => h.style.display = cat === 'all' ? '' : 'none');
-}
-
-// LOAN
-function calcLoan() {
-  const P = v('l-amount'), r = v('l-rate')/100/12, n = v('l-term')*12;
-  const monthly = r===0 ? P/n : P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
-  const total = monthly*n, interest = total-P;
-  el('l-monthly').textContent = fmtD(monthly);
-  el('l-principal').textContent = fmt(P);
-  el('l-interest').textContent = fmt(interest);
-  el('l-total').textContent = fmt(total);
-  el('l-bar').style.width = (P/total*100)+'%';
-  // table
-  let bal = P, rows='';
-  for(let i=1;i<=n;i++){const int=bal*r,prin=monthly-int;bal-=prin;rows+=`<tr><td>${i}</td><td>${fmtD(monthly)}</td><td class="g">${fmtD(prin)}</td><td class="r">${fmtD(int)}</td><td>${fmtD(Math.max(0,bal))}</td></tr>`;}
-  el('l-tbody').innerHTML = rows;
-}
-
-// bind loan inputs
-['l-amount','l-rate','l-term'].forEach(id => el(id).addEventListener('input', calcLoan));
-
-// MORTGAGE
-function calcMortgage() {
-  const price=v('m-price'), downPct=v('m-down'), rate=v('m-rate')/100/12;
-  const term=parseInt(el('m-term').value)*12, tax=v('m-tax')/12, ins=v('m-ins')/12;
-  const down=price*downPct/100, loan=price-down;
-  const pi = rate===0 ? loan/term : loan*rate*Math.pow(1+rate,term)/(Math.pow(1+rate,term)-1);
-  const pmi = downPct < 20 ? loan*0.008/12 : 0;
-  const total = pi+tax+ins+pmi;
-  el('m-monthly').textContent = fmtD(total);
-  el('m-pi').textContent = fmtD(pi);
-  el('m-taxmo').textContent = fmtD(tax);
-  el('m-insmo').textContent = fmtD(ins);
-  el('m-pmi').textContent = pmi>0 ? fmtD(pmi) : 'None';
-  el('m-downamt').textContent = fmt(down);
-  el('m-totint').textContent = fmt(pi*term-loan);
-}
-['m-price','m-down','m-rate','m-tax','m-ins'].forEach(id=>el(id).addEventListener('input',calcMortgage));
-
-// COMPOUND
-function calcCI() {
-  const P=v('ci-principal'), mo=v('ci-monthly'), r=v('ci-rate')/100/12, n=v('ci-years')*12;
-  const future = P*Math.pow(1+r,n) + mo*(Math.pow(1+r,n)-1)/r;
-  const contributed = P + mo*n;
-  const earned = future - contributed;
-  el('ci-future').textContent = fmt(future);
-  el('ci-contributed').textContent = fmt(contributed);
-  el('ci-earned').textContent = fmt(earned);
-  el('ci-return').textContent = ((future/contributed-1)*100).toFixed(1)+'%';
-  el('ci-bar').style.width = (contributed/future*100)+'%';
-}
-['ci-principal','ci-monthly','ci-rate','ci-years'].forEach(id=>el(id).addEventListener('input',calcCI));
-
-// CREDIT CARD
-function calcCC() {
-  const bal=v('cc-balance'), rate=v('cc-rate')/100/12, pmt=v('cc-payment');
-  if(pmt <= bal*rate){ el('cc-months').textContent='Never'; el('cc-interest').textContent='∞'; el('cc-total').textContent='∞'; el('cc-date').textContent='—'; return; }
-  const months = Math.ceil(-Math.log(1-bal*rate/pmt)/Math.log(1+rate));
-  const total = pmt*months, interest = total-bal;
-  const due = new Date(); due.setMonth(due.getMonth()+months);
-  el('cc-months').textContent = months + ' mo';
-  el('cc-interest').textContent = fmt(interest);
-  el('cc-total').textContent = fmt(total);
-  el('cc-date').textContent = due.toLocaleDateString('en-US',{month:'long',year:'numeric'});
-}
-['cc-balance','cc-rate','cc-payment'].forEach(id=>el(id).addEventListener('input',calcCC));
-
-// BUDGET
-function calcBudget() {
-  const inc=v('b-income');
-  el('b-show').textContent = fmt(inc);
-  el('b-needs').textContent = fmt(inc*0.5);
-  el('b-wants').textContent = fmt(inc*0.3);
-  el('b-save').textContent = fmt(inc*0.2);
-}
-el('b-income').addEventListener('input',calcBudget);
-
-// RETIREMENT
-function calcRetirement() {
-  const age=v('r-age'), retire=v('r-retire'), saved=v('r-saved'), contrib=v('r-contrib'), ret=v('r-return')/100/12;
-  const n=(retire-age)*12;
-  if(n<=0){el('r-total').textContent='—';return;}
-  const future = saved*Math.pow(1+ret,n) + contrib*(Math.pow(1+ret,n)-1)/ret;
-  const contributed = saved + contrib*n;
-  el('r-total').textContent = fmt(future);
-  el('r-years').textContent = (retire-age)+' years';
-  el('r-contributed').textContent = fmt(contributed);
-  el('r-growth').textContent = fmt(future-contributed);
-  el('r-monthly').textContent = fmt(future*0.04/12);
-}
-['r-age','r-retire','r-saved','r-contrib','r-return'].forEach(id=>el(id).addEventListener('input',calcRetirement));
-
-// BMI
-function calcBMI() {
-  const ft=v('bmi-ft'), inch=v('bmi-in'), w=v('bmi-w');
-  const totalIn = ft*12+inch, bmi = (w/(totalIn*totalIn))*703;
-  const cat = bmi<18.5?'Underweight':bmi<25?'Normal weight':bmi<30?'Overweight':'Obese';
-  const loLbs = Math.round(18.5*totalIn*totalIn/703), hiLbs = Math.round(24.9*totalIn*totalIn/703);
-  el('bmi-val').textContent = bmi.toFixed(1);
-  el('bmi-cat').textContent = cat;
-  el('bmi-range').textContent = loLbs+' – '+hiLbs+' lbs';
-}
-['bmi-ft','bmi-in','bmi-w'].forEach(id=>el(id).addEventListener('input',calcBMI));
-
-// CALORIE (Mifflin-St Jeor)
-function calcCalorie() {
-  const age=v('cal-age'), h=v('cal-height'), w=v('cal-weight');
-  const sex=el('cal-sex').value, act=parseFloat(el('cal-activity').value);
-  const wKg=w*0.453592, hCm=h*2.54;
-  let bmr = sex==='male' ? 10*wKg+6.25*hCm-5*age+5 : 10*wKg+6.25*hCm-5*age-161;
-  const tdee = Math.round(bmr*act);
-  el('cal-main').textContent = fmtN(tdee)+' cal';
-  el('cal-lose').textContent = fmtN(tdee-500)+' cal';
-  el('cal-mildlose').textContent = fmtN(tdee-250)+' cal';
-  el('cal-gain').textContent = fmtN(tdee+500)+' cal';
-}
-['cal-age','cal-height','cal-weight'].forEach(id=>el(id).addEventListener('input',calcCalorie));
-['cal-sex','cal-activity'].forEach(id=>el(id).addEventListener('change',calcCalorie));
-
-// MACRO
-function calcMacro() {
-  const cal=v('mac-cal'), goal=el('mac-goal').value, w=v('mac-weight');
-  const proteinG = goal==='lose' ? w*1.0 : goal==='gain' ? w*0.9 : w*0.75;
-  const fatPct = goal==='lose' ? 0.25 : 0.3;
-  const fatCal = cal*fatPct, fatG = fatCal/9;
-  const proteinCal = proteinG*4;
-  const carbCal = cal-proteinCal-fatCal, carbG = carbCal/4;
-  el('mac-protein').textContent = Math.round(proteinG)+'g';
-  el('mac-carbs').textContent = Math.round(carbG)+'g';
-  el('mac-fat').textContent = Math.round(fatG)+'g';
-  el('mac-pcal').textContent = Math.round(proteinCal)+' cal';
-}
-['mac-cal','mac-weight'].forEach(id=>el(id).addEventListener('input',calcMacro));
-el('mac-goal').addEventListener('change',calcMacro);
-
-// PREGNANCY
-function calcPreg() {
-  const lmp = new Date(el('preg-lmp').value), cycle=v('preg-cycle')||28;
-  if(isNaN(lmp)) return;
-  const adj = cycle-28;
-  const due = new Date(lmp); due.setDate(due.getDate()+280+adj);
-  const today=new Date(), diffMs=today-lmp, weeks=Math.floor(diffMs/604800000);
-  const tri = weeks<14?'1st Trimester':weeks<28?'2nd Trimester':'3rd Trimester';
-  const daysLeft = Math.round((due-today)/86400000);
-  el('preg-due').textContent = due.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
-  el('preg-week').textContent = weeks>0?'Week '+weeks:'Not started';
-  el('preg-tri').textContent = weeks>0?tri:'—';
-  el('preg-days').textContent = daysLeft>0?daysLeft+' days':'Past due date';
-}
-
-// HOME AFFORD
-function calcAfford() {
-  const inc=v('ha-income'), debt=v('ha-debt'), down=v('ha-down'), rate=v('ha-rate')/100/12;
-  const maxPayment = inc/12*0.28-debt;
-  const n=360;
-  const loanAmt = maxPayment*(Math.pow(1+rate,n)-1)/(rate*Math.pow(1+rate,n));
-  const maxHome = loanAmt+down;
-  el('ha-max').textContent = fmt(maxHome);
-  el('ha-payment').textContent = fmtD(maxPayment);
-  el('ha-loan').textContent = fmt(loanAmt);
-  el('ha-downshow').textContent = fmt(down);
-}
-['ha-income','ha-debt','ha-down','ha-rate'].forEach(id=>el(id).addEventListener('input',calcAfford));
-
-// RENT VS BUY
-function calcRB() {
-  const rent=v('rb-rent'), price=v('rb-price'), downPct=v('rb-down')/100;
-  const rate=v('rb-rate')/100/12, years=v('rb-years');
-  const down=price*downPct, loan=price-down, n=years*12;
-  const mo = rate===0?loan/360:loan*rate*Math.pow(1+rate,360)/(Math.pow(1+rate,360)-1);
-  const propTax=price*0.012/12, ins=price*0.004/12;
-  const buyCostTotal = (mo+propTax+ins)*n + down;
-  const rentTotal = rent*n;
-  const homeVal = price*Math.pow(1.04,years);
-  // equity = homeVal - remaining loan
-  let bal=loan;for(let i=0;i<n;i++){const int=bal*rate;bal-=mo-int;}
-  const equity = homeVal-Math.max(0,bal);
-  const netBuy = buyCostTotal - equity;
-  const advantage = rentTotal - netBuy;
-  const verdict = advantage > 0 ? '🏡 Buy' : '🔑 Rent';
-  el('rb-verdict').textContent = verdict;
-  el('rb-rentcost').textContent = fmt(rentTotal);
-  el('rb-buycost').textContent = fmt(buyCostTotal);
-  el('rb-equity').textContent = fmt(equity);
-  el('rb-advantage').textContent = (advantage>0?'+':'')+fmt(Math.abs(advantage))+' '+(advantage>0?'buying wins':'renting wins');
-}
-['rb-rent','rb-price','rb-down','rb-rate','rb-years'].forEach(id=>el(id).addEventListener('input',calcRB));
-
-// TIP
-function calcTip() {
-  const bill=v('tip-bill'), pct=v('tip-pct'), ppl=Math.max(1,v('tip-people'));
-  const tip=bill*pct/100, total=bill+tip;
-  el('tip-each').textContent = fmtD(total/ppl);
-  el('tip-tipamt').textContent = fmtD(tip);
-  el('tip-total').textContent = fmtD(total);
-  el('tip-tippp').textContent = fmtD(tip/ppl);
-}
-['tip-bill','tip-pct','tip-people'].forEach(id=>el(id).addEventListener('input',calcTip));
-
-// AGE
 function calcAge() {
-  const dob=new Date(el('age-dob').value); if(isNaN(dob)) return;
-  const today=new Date();
-  let years=today.getFullYear()-dob.getFullYear(), months=today.getMonth()-dob.getMonth(), days=today.getDate()-dob.getDate();
-  if(days<0){months--;days+=new Date(today.getFullYear(),today.getMonth(),0).getDate();}
-  if(months<0){years--;months+=12;}
-  const totalDays=Math.floor((today-dob)/86400000), totalMonths=years*12+months;
-  const nextBday=new Date(today.getFullYear(),dob.getMonth(),dob.getDate());
-  if(nextBday<=today) nextBday.setFullYear(today.getFullYear()+1);
-  const daysToNext=Math.ceil((nextBday-today)/86400000);
-  el('age-years').textContent = years+' years, '+months+' mo, '+days+' d';
-  el('age-months').textContent = fmtN(totalMonths)+' months';
-  el('age-days').textContent = fmtN(totalDays)+' days';
-  el('age-next').textContent = 'In '+daysToNext+' days';
-}
-
-// PERCENT
-function calcPct() {
-  const p1x=v('p1-x'),p1y=v('p1-y');
-  el('p1-res').textContent = (p1x/100*p1y).toFixed(2);
-  const p2x=v('p2-x'),p2y=v('p2-y');
-  el('p2-res').textContent = p2y?((p2x/p2y)*100).toFixed(2)+'%':'—';
-  const p3o=v('p3-old'),p3n=v('p3-new');
-  if(p3o){const chg=((p3n-p3o)/p3o*100);el('p3-res').textContent=(chg>=0?'+':'')+chg.toFixed(2)+'%';}
-}
-['p1-x','p1-y','p2-x','p2-y','p3-old','p3-new'].forEach(id=>el(id).addEventListener('input',calcPct));
-
-// GPA
-const gradePoints = {'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'F':0.0};
-let courseCount=0;
-function addGPACourse() {
-  courseCount++;
-  const grades = Object.keys(gradePoints);
-  const div=document.createElement('div');
-  div.style.cssText='display:flex;gap:10px;margin-bottom:10px;align-items:center';
-  div.innerHTML=`
-    <input type="text" placeholder="Course ${courseCount}" class="no-prefix" style="flex:2;padding:10px 12px;background:#ffffff;border:1px solid var(--border);border-radius:8px;color:#0a0e1a;font-family:'DM Sans',sans-serif;font-size:13px;outline:none;">
-    <select class="gpa-grade no-prefix" style="flex:1;padding:10px 12px;background:#ffffff;border:1px solid var(--border);border-radius:8px;color:#0a0e1a;font-family:'DM Mono',monospace;font-size:13px;outline:none;" onchange="calcGPA()">
-      ${grades.map(g=>`<option value="${g}" ${g==='B'?'selected':''}>${g}</option>`).join('')}
-    </select>
-    <input type="number" value="3" min="1" max="6" class="no-prefix gpa-credits" style="flex:1;padding:10px 12px;background:#ffffff;border:1px solid var(--border);border-radius:8px;color:#0a0e1a;font-family:'DM Mono',monospace;font-size:13px;outline:none;" oninput="calcGPA()" placeholder="Credits">
-    <button onclick="this.parentElement.remove();calcGPA()" style="background:none;border:none;color:#2a2a3a;cursor:pointer;font-size:18px;padding:0 4px">×</button>
-  `;
-  el('gpa-courses').appendChild(div);
-  calcGPA();
-}
-
-function calcGPA() {
-  const grades=[...document.querySelectorAll('.gpa-grade')].map(s=>s.value);
-  const credits=[...document.querySelectorAll('.gpa-credits')].map(i=>parseFloat(i.value)||0);
-  let totalPoints=0,totalCredits=0;
-  grades.forEach((g,i)=>{totalPoints+=gradePoints[g]*credits[i];totalCredits+=credits[i];});
-  const gpa=totalCredits?totalPoints/totalCredits:0;
-  const letter=gpa>=3.7?'A / Dean\'s List':gpa>=3.0?'B':gpa>=2.0?'C':gpa>=1.0?'D':'F';
-  el('gpa-val').textContent = gpa.toFixed(2);
-  el('gpa-credits').textContent = totalCredits+' credits';
-  el('gpa-letter').textContent = letter;
-}
-
-
-
-
-
-// ── NEW CALCULATOR FUNCTIONS ─────────────────────────────────────────────────
-
-// SAVINGS GOAL
-function calcSavings() {
-  const goal=v('sg-goal'), current=v('sg-current'), contrib=v('sg-contrib'), r=v('sg-rate')/100/12;
-  if(contrib<=0){el('sg-time').textContent='∞';return;}
-  const needed = goal - current;
-  let months = 0, balance = current;
-  while(balance < goal && months < 600) { balance = balance*(1+r)+contrib; months++; }
-  const due = new Date(); due.setMonth(due.getMonth()+months);
-  el('sg-time').textContent = months < 12 ? months+' mo' : Math.floor(months/12)+'y '+(months%12)+'m';
-  el('sg-goalshow').textContent = fmt(goal);
-  el('sg-totalcontrib').textContent = fmt(contrib*months);
-  el('sg-interest').textContent = fmt(balance-current-contrib*months);
-  el('sg-date').textContent = due.toLocaleDateString('en-US',{month:'short',year:'numeric'});
-}
-['sg-goal','sg-current','sg-contrib','sg-rate'].forEach(id=>el(id)?.addEventListener('input',calcSavings));
-
-// DEBT TO INCOME
-function calcDTI() {
-  const income=v('dti-income'), housing=v('dti-housing'), car=v('dti-car'), cc=v('dti-cc'), student=v('dti-student'), other=v('dti-other');
-  const totalDebt=housing+car+cc+student+other;
-  const dti=income>0?(totalDebt/income*100):0;
-  const rating=dti<20?'Excellent ✅':dti<35?'Good 👍':dti<50?'High ⚠️':'Very High 🚨';
-  el('dti-ratio').textContent=dti.toFixed(1)+'%';
-  el('dti-total').textContent=fmt(totalDebt);
-  el('dti-incomeshow').textContent=fmt(income);
-  el('dti-rating').textContent=rating;
-}
-['dti-income','dti-housing','dti-car','dti-cc','dti-student','dti-other'].forEach(id=>el(id)?.addEventListener('input',calcDTI));
-
-// NET WORTH
-function calcNetWorth() {
-  const assets=v('nw-cash')+v('nw-invest')+v('nw-property')+v('nw-car')+v('nw-otherasset');
-  const liabs=v('nw-mortgage')+v('nw-carloan')+v('nw-student')+v('nw-ccdebt')+v('nw-otherliab');
-  const nw=assets-liabs;
-  el('nw-total').textContent=fmt(nw);
-  el('nw-total').style.color=nw>=0?'#2ecc71':'#e74c3c';
-  el('nw-assets').textContent=fmt(assets);
-  el('nw-liabs').textContent=fmt(liabs);
-}
-['nw-cash','nw-invest','nw-property','nw-car','nw-otherasset','nw-mortgage','nw-carloan','nw-student','nw-ccdebt','nw-otherliab'].forEach(id=>el(id)?.addEventListener('input',calcNetWorth));
-
-// INFLATION
-function calcInflation() {
-  const amount=v('inf-amount'), rate=v('inf-rate')/100, years=v('inf-years');
-  const future=amount*Math.pow(1+rate,years);
-  const lost=future-amount;
-  const todayEquiv=amount/Math.pow(1+rate,years);
-  el('inf-future').textContent=fmt(future);
-  el('inf-orig').textContent=fmt(amount);
-  el('inf-lost').textContent=fmt(lost);
-  el('inf-today').textContent=fmtD(todayEquiv);
-  el('inf-total').textContent=((future/amount-1)*100).toFixed(1)+'%';
-}
-['inf-amount','inf-rate','inf-years'].forEach(id=>el(id)?.addEventListener('input',calcInflation));
-
-// SALARY
-function calcSalary() {
-  const annual=v('sal-annual'), hours=v('sal-hours')||40, weeks=v('sal-weeks')||52;
-  const totalHours=hours*weeks;
-  el('sal-hourly').textContent=fmtD(annual/totalHours);
-  el('sal-yr').textContent=fmt(annual);
-  el('sal-mo').textContent=fmt(annual/12);
-  el('sal-biweek').textContent=fmt(annual/26);
-  el('sal-week').textContent=fmt(annual/weeks);
-  el('sal-day').textContent=fmtD(annual/(weeks*5));
-  el('sal-min').textContent=fmtD(annual/(totalHours*60));
-}
-['sal-annual','sal-hours','sal-weeks'].forEach(id=>el(id)?.addEventListener('input',calcSalary));
-
-// ROI
-function calcROI() {
-  const cost=v('roi-cost'), value=v('roi-value'), years=v('roi-years')||1;
-  const profit=value-cost;
-  const roi=cost>0?profit/cost*100:0;
-  const annualised=(Math.pow(value/cost,1/years)-1)*100;
-  el('roi-pct').textContent=roi.toFixed(2)+'%';
-  el('roi-profit').textContent=fmt(profit);
-  el('roi-profit').className='stat-r '+(profit>=0?'g':'r');
-  el('roi-annual').textContent=annualised.toFixed(2)+'%';
-  el('roi-multiple').textContent=(value/cost).toFixed(2)+'x';
-}
-['roi-cost','roi-value','roi-years'].forEach(id=>el(id)?.addEventListener('input',calcROI));
-
-// EMERGENCY FUND
-function calcEF() {
-  const rent=v('ef-rent'), food=v('ef-food'), transport=v('ef-transport'), bills=v('ef-bills'), other=v('ef-other');
-  const months=parseInt(el('ef-months').value)||6;
-  const monthly=rent+food+transport+bills+other;
-  const target=monthly*months;
-  el('ef-target').textContent=fmt(target);
-  el('ef-monthly').textContent=fmt(monthly);
-  el('ef-cover').textContent=months+' months';
-  el('ef-timeline').textContent=Math.ceil(target/500)+' months';
-}
-['ef-rent','ef-food','ef-transport','ef-bills','ef-other'].forEach(id=>el(id)?.addEventListener('input',calcEF));
-el('ef-months')?.addEventListener('change',calcEF);
-
-// CAR LOAN
-function calcCar() {
-  const price=v('car-price'), down=v('car-down'), rate=v('car-rate')/100/12;
-  const term=parseInt(el('car-term').value)||60;
-  const loan=price-down;
-  const monthly=rate===0?loan/term:loan*rate*Math.pow(1+rate,term)/(Math.pow(1+rate,term)-1);
-  const total=monthly*term, interest=total-loan;
-  el('car-monthly').textContent=fmtD(monthly);
-  el('car-loan').textContent=fmt(loan);
-  el('car-interest').textContent=fmt(interest);
-  el('car-total').textContent=fmt(total);
-  el('car-true').textContent=fmt(total+down);
-}
-['car-price','car-down','car-rate'].forEach(id=>el(id)?.addEventListener('input',calcCar));
-el('car-term')?.addEventListener('change',calcCar);
-
-// STOCK RETURN
-function calcStock() {
-  const shares=v('sr-shares'), buy=v('sr-buy'), sell=v('sr-sell'), fee=v('sr-fee');
-  const invested=shares*buy, proceeds=shares*sell-fee;
-  const profit=proceeds-invested;
-  const roi=invested>0?profit/invested*100:0;
-  el('sr-return').textContent=roi.toFixed(2)+'%';
-  el('sr-return').style.color=roi>=0?'#2ecc71':'#e74c3c';
-  el('sr-invested').textContent=fmt(invested);
-  el('sr-profit').textContent=fmt(profit);
-  el('sr-profit').className='stat-r '+(profit>=0?'g':'r');
-  el('sr-roi').textContent=roi.toFixed(2)+'%';
-  el('sr-roi').className='stat-r '+(roi>=0?'g':'r');
-}
-['sr-shares','sr-buy','sr-sell','sr-fee'].forEach(id=>el(id)?.addEventListener('input',calcStock));
-
-// TAX ESTIMATOR (US 2024 brackets)
-function calcTaxEst() {
-  const income=v('tax-income'), deduct=v('tax-deduct');
-  const status=el('tax-status').value;
-  const taxable=Math.max(0, income-deduct);
-  const brackets = status==='married'
-    ? [[23200,0.10],[94300,0.12],[201050,0.22],[383900,0.24],[487450,0.32],[731200,0.35],[Infinity,0.37]]
-    : [[11600,0.10],[47150,0.12],[100525,0.22],[191950,0.24],[243725,0.32],[609350,0.35],[Infinity,0.37]];
-  let tax=0, prev=0, bracket='37%';
-  for(const [limit,rate] of brackets){
-    if(taxable<=prev)break;
-    const chunk=Math.min(taxable,limit)-prev;
-    tax+=chunk*rate; bracket=(rate*100)+'%'; prev=limit;
+  const dobInput = document.getElementById('age-dob').value;
+  if (!dobInput) return;
+  
+  const dob = new Date(dobInput);
+  const today = new Date();
+  
+  // Prevent future dates (fallback)
+  if (dob > today) {
+    document.getElementById('age-years').textContent = "Future date!";
+    return;
   }
-  const effective=income>0?tax/income*100:0;
-  el('tax-bill').textContent=fmt(tax);
-  el('tax-taxable').textContent=fmt(taxable);
-  el('tax-effective').textContent=effective.toFixed(1)+'%';
-  el('tax-bracket').textContent=bracket;
-  el('tax-takehome').textContent=fmt((income-tax)/12);
-}
-['tax-income','tax-deduct'].forEach(id=>el(id)?.addEventListener('input',calcTaxEst));
-el('tax-status')?.addEventListener('change',calcTaxEst);
 
-// WATER INTAKE
-function calcWater() {
-  const w=v('wat-weight'), act=parseFloat(el('wat-activity').value)||1.2, climate=parseFloat(el('wat-climate').value)||1.0;
-  const oz=Math.round(w*0.5*act*climate);
-  const litres=(oz*0.0296352).toFixed(1);
-  el('wat-oz').textContent=oz+' oz';
-  el('wat-litres').textContent=litres+' L';
-  el('wat-glasses').textContent=Math.round(oz/8)+' glasses';
-  el('wat-bottles').textContent=Math.ceil(oz*0.0296352/0.5)+' bottles';
-}
-['wat-weight'].forEach(id=>el(id)?.addEventListener('input',calcWater));
-['wat-activity','wat-climate'].forEach(id=>el(id)?.addEventListener('change',calcWater));
+  let years = today.getFullYear() - dob.getFullYear();
+  let months = today.getMonth() - dob.getMonth();
+  let days = today.getDate() - dob.getDate();
 
-// BODY FAT (US Navy method)
-function calcBodyFat() {
-  const sex=el('bf-sex').value, h=v('bf-height'), neck=v('bf-neck'), waist=v('bf-waist'), hip=v('bf-hip'), w=v('bmi-w')||160;
-  let bf;
-  if(sex==='male'){
-    bf=495/(1.0324-0.19077*Math.log10(waist-neck)+0.15456*Math.log10(h))-450;
+  if (days < 0) {
+    months--;
+    // Get days in previous month
+    const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  const totalDays = Math.floor((today - dob) / (1000 * 60 * 60 * 24));
+  const totalMonths = years * 12 + months;
+
+  // Next birthday calculation
+  const nextBday = new Date(today.getFullYear(), dob.getMonth(), dob.getDate());
+  if (nextBday <= today) {
+    nextBday.setFullYear(today.getFullYear() + 1);
+  }
+  const daysToNext = Math.ceil((nextBday - today) / (1000 * 60 * 60 * 24));
+
+  // Update DOM with animation
+  const yearsEl = document.getElementById('age-years');
+  if (years === 0 && months === 0 && days === 0) {
+    yearsEl.textContent = "Happy Birthday! 🎉";
   } else {
-    bf=495/(1.29579-0.35004*Math.log10(waist+hip-neck)+0.22100*Math.log10(h))-450;
+    yearsEl.textContent = `${years} Years, ${months} Months, ${days} Days`;
   }
-  bf=Math.max(0,Math.min(60,bf));
-  const cat=sex==='male'?(bf<6?'Essential':bf<14?'Athlete':bf<18?'Fitness':bf<25?'Average':'Obese'):(bf<14?'Essential':bf<21?'Athlete':bf<25?'Fitness':bf<32?'Average':'Obese');
-  const bodyWeight=v('bmi-w')||160;
-  el('bf-pct').textContent=bf.toFixed(1)+'%';
-  el('bf-cat').textContent=cat;
-  el('bf-fatmass').textContent=(bodyWeight*bf/100).toFixed(1)+' lbs';
-  el('bf-leanmass').textContent=(bodyWeight*(1-bf/100)).toFixed(1)+' lbs';
-  el('bf-hip-field').style.display=sex==='female'?'':'none';
-}
-['bf-height','bf-neck','bf-waist','bf-hip'].forEach(id=>el(id)?.addEventListener('input',calcBodyFat));
-el('bf-sex')?.addEventListener('change',calcBodyFat);
-
-// HEART RATE ZONES
-function calcHR() {
-  const age=v('hr-age');
-  const maxHR=220-age;
-  const zone=(lo,hi)=>Math.round(maxHR*lo)+'-'+Math.round(maxHR*hi)+' bpm';
-  el('hr-max').textContent=maxHR+' bpm';
-  el('hr-z1').textContent=zone(0.50,0.60);
-  el('hr-z2').textContent=zone(0.60,0.70);
-  el('hr-z3').textContent=zone(0.70,0.80);
-  el('hr-z4').textContent=zone(0.80,0.90);
-  el('hr-z5').textContent=zone(0.90,1.00);
-}
-['hr-age','hr-resting'].forEach(id=>el(id)?.addEventListener('input',calcHR));
-
-// SLEEP CALCULATOR
-function calcSleep() {
-  const t=el('sleep-time').value; if(!t)return;
-  const [h,m]=t.split(':').map(Number);
-  const totalMins=h*60+m+14;
-  const cycles=[3,4,5,6];
-  const ids=['sl-3','sl-4','sl-5','sl-6'];
-  cycles.forEach((c,i)=>{
-    const wake=(totalMins+c*90)%1440;
-    const wh=Math.floor(wake/60), wm=wake%60;
-    const ampm=wh>=12?'PM':'AM';
-    const h12=wh%12||12;
-    el(ids[i]).textContent=`${h12}:${String(wm).padStart(2,'0')} ${ampm}`;
-  });
-}
-
-// IDEAL WEIGHT
-function calcIW() {
-  const sex=el('iw-sex').value, ft=v('iw-ft'), inch=v('iw-in');
-  const totalIn=ft*12+inch;
-  const exIn=sex==='male'?60:60;
-  const hamwi=sex==='male'?106+(totalIn-60)*6:100+(totalIn-60)*5;
-  const devine=sex==='male'?50+2.3*(totalIn-60):45.5+2.3*(totalIn-60);
-  const loLbs=Math.round(18.5*(totalIn*totalIn)/703), hiLbs=Math.round(24.9*(totalIn*totalIn)/703);
-  el('iw-range').textContent=Math.round(loLbs)+' – '+Math.round(hiLbs)+' lbs';
-  el('iw-hamwi').textContent=Math.round(hamwi)+' lbs';
-  el('iw-devine').textContent=Math.round(devine)+' lbs';
-  el('iw-bmi').textContent=loLbs+' – '+hiLbs+' lbs';
-}
-['iw-ft','iw-in'].forEach(id=>el(id)?.addEventListener('input',calcIW));
-el('iw-sex')?.addEventListener('change',calcIW);
-
-// STEPS TO CALORIES
-function calcSteps() {
-  const steps=v('st-steps'), weight=v('st-weight'), pace=parseFloat(el('st-pace').value)||0.04;
-  const cals=Math.round(steps*pace*(weight/150));
-  const miles=(steps/2000).toFixed(2);
-  const speed=parseFloat(el('st-pace').value)===0.03?2:parseFloat(el('st-pace').value)===0.04?3:parseFloat(el('st-pace').value)===0.05?4:5;
-  const mins=Math.round((miles/speed)*60);
-  el('st-cals').textContent=cals+' cal';
-  el('st-dist').textContent=miles+' miles';
-  el('st-time').textContent=mins+' min';
-}
-['st-steps','st-weight'].forEach(id=>el(id)?.addEventListener('input',calcSteps));
-el('st-pace')?.addEventListener('change',calcSteps);
-
-// RENTAL YIELD
-function calcRY() {
-  const value=v('ry-value'), rent=v('ry-rent'), expenses=v('ry-expenses');
-  const annual=rent*12;
-  const gross=value>0?annual/value*100:0;
-  const net=value>0?(annual-expenses)/value*100:0;
-  el('ry-net').textContent=net.toFixed(2)+'%';
-  el('ry-gross').textContent=gross.toFixed(2)+'%';
-  el('ry-income').textContent=fmt(annual);
-  el('ry-netincome').textContent=fmt(annual-expenses);
-}
-['ry-value','ry-rent','ry-expenses'].forEach(id=>el(id)?.addEventListener('input',calcRY));
-
-// STAMP DUTY
-function calcStamp() {
-  const price=v('sd-price'), rate=v('sd-rate')/100;
-  const duty=price*rate;
-  el('sd-duty').textContent=fmt(duty);
-  el('sd-priceshow').textContent=fmt(price);
-  el('sd-effective').textContent=(rate*100).toFixed(2)+'%';
-  el('sd-total').textContent=fmt(price+duty);
-}
-['sd-price','sd-rate'].forEach(id=>el(id)?.addEventListener('input',calcStamp));
-
-// RENOVATION ROI
-function calcReno() {
-  const value=v('reno-value'), cost=v('reno-cost'), increase=v('reno-increase');
-  const gain=increase-cost;
-  const roi=cost>0?gain/cost*100:0;
-  const perDollar=cost>0?increase/cost:0;
-  el('reno-roi').textContent=roi.toFixed(1)+'%';
-  el('reno-roi').style.color=roi>=0?'#2ecc71':'#e74c3c';
-  el('reno-newval').textContent=fmt(value+increase);
-  el('reno-gain').textContent=fmt(gain);
-  el('reno-gain').className='stat-r '+(gain>=0?'g':'r');
-  el('reno-perdollar').textContent='$'+perDollar.toFixed(2);
-  el('reno-verdict').textContent=roi>=100?'✅ Worth it':roi>=50?'👍 Probably':roi>=0?'⚠️ Borderline':'❌ Not worth it';
-}
-['reno-value','reno-cost','reno-increase'].forEach(id=>el(id)?.addEventListener('input',calcReno));
-
-// PAINT
-function calcPaint() {
-  const l=v('pt-length'), w=v('pt-width'), h=v('pt-height'), coats=parseInt(el('pt-coats').value)||2, cov=v('pt-coverage')||12;
-  const wallArea=2*(l+w)*h;
-  const perCoat=wallArea/cov;
-  const total=perCoat*coats;
-  el('pt-litres').textContent=total.toFixed(1)+' L';
-  el('pt-area').textContent=wallArea.toFixed(1)+' m²';
-  el('pt-percoat').textContent=perCoat.toFixed(1)+' L';
-  el('pt-tins').textContent=Math.ceil(total/4)+' tins';
-}
-['pt-length','pt-width','pt-height','pt-coverage'].forEach(id=>el(id)?.addEventListener('input',calcPaint));
-el('pt-coats')?.addEventListener('change',calcPaint);
-
-// SCIENTIFIC CALCULATOR
-let sciExpr = '';
-function sciPress(val) {
-  if(val==='(') { sciExpr+=val; } else { sciExpr+=val; }
-  el('sci-display').textContent=sciExpr||'0';
-  el('sci-expr').textContent='';
-}
-function sciCalc() {
-  try {
-    // Close any open parentheses
-    const opens=(sciExpr.match(/\(/g)||[]).length-(sciExpr.match(/\)/g)||[]).length;
-    let expr=sciExpr+')'.repeat(Math.max(0,opens));
-    const result=Function('"use strict";return('+expr+')')();
-    el('sci-expr').textContent=sciExpr+'=';
-    el('sci-display').textContent=parseFloat(result.toFixed(10)).toString();
-    sciExpr=parseFloat(result.toFixed(10)).toString();
-  } catch(e) { el('sci-display').textContent='Error'; sciExpr=''; }
-}
-function sciClear() { sciExpr=''; el('sci-display').textContent='0'; el('sci-expr').textContent=''; }
-function sciDel() { sciExpr=sciExpr.slice(0,-1); el('sci-display').textContent=sciExpr||'0'; }
-
-// Add CSS for sci buttons
-const sciStyle=document.createElement('style');
-sciStyle.textContent=`.sci-btn{background:#ffffff;border:1.5px solid #d0d5dd;border-radius:8px;padding:12px 8px;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:#080814;cursor:pointer;transition:all 0.15s}.sci-btn:hover{background:#e8f7f7;border-color:#0a5a5e}.sci-fn{background:#fff0f7;border-color:#f0c8d8;color:#8b006b;font-size:12px}.sci-op{background:#fff7ec;border-color:#f0d8b0;color:#8b4f00}.sci-eq{font-size:18px!important}`;
-document.head.appendChild(sciStyle);
-
-// QUADRATIC
-function calcQuad() {
-  const a=v('qd-a'), b=v('qd-b'), c_=v('qd-c');
-  const disc=b*b-4*a*c_;
-  el('qd-disc').textContent=disc.toFixed(4);
-  if(disc>0){
-    el('qd-x1').textContent=((-b+Math.sqrt(disc))/(2*a)).toFixed(4);
-    el('qd-x2').textContent=((-b-Math.sqrt(disc))/(2*a)).toFixed(4);
-  } else if(disc===0){
-    el('qd-x1').textContent=(-b/(2*a)).toFixed(4);
-    el('qd-x2').textContent='Same root';
+  
+  document.getElementById('age-months').textContent = totalMonths.toLocaleString() + " months";
+  document.getElementById('age-days').textContent = totalDays.toLocaleString() + " days";
+  
+  if (daysToNext === 0 || (years === 0 && months === 0 && days === 0)) {
+    document.getElementById('age-next').textContent = "Today! 🎂";
+  } else if (daysToNext === 1) {
+    document.getElementById('age-next').textContent = "Tomorrow!";
   } else {
-    const real=(-b/(2*a)).toFixed(4), imag=(Math.sqrt(-disc)/(2*a)).toFixed(4);
-    el('qd-x1').textContent=real+' + '+imag+'i';
-    el('qd-x2').textContent=real+' − '+imag+'i';
-  }
-  el('qd-vx').textContent=(-b/(2*a)).toFixed(4);
-  el('qd-vy').textContent=(c_-b*b/(4*a)).toFixed(4);
-}
-['qd-a','qd-b','qd-c'].forEach(id=>el(id)?.addEventListener('input',calcQuad));
-
-// STATISTICS
-function calcStats() {
-  const raw=el('stats-input').value;
-  const nums=raw.split(',').map(s=>parseFloat(s.trim())).filter(n=>!isNaN(n));
-  if(!nums.length)return;
-  const sorted=[...nums].sort((a,b)=>a-b);
-  const n=nums.length, sum=nums.reduce((a,b)=>a+b,0), mean=sum/n;
-  const mid=Math.floor(n/2);
-  const median=n%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;
-  const freq={};nums.forEach(x=>{freq[x]=(freq[x]||0)+1;});
-  const maxF=Math.max(...Object.values(freq));
-  const mode=Object.keys(freq).filter(k=>freq[k]===maxF).join(', ');
-  const variance=nums.reduce((a,x)=>a+Math.pow(x-mean,2),0)/n;
-  const std=Math.sqrt(variance);
-  el('st-count').textContent=n;
-  el('st-sum').textContent=sum.toFixed(4);
-  el('st-mean').textContent=mean.toFixed(4);
-  el('st-median').textContent=median.toFixed(4);
-  el('st-mode').textContent=mode;
-  el('st-min').textContent=sorted[0];
-  el('st-max').textContent=sorted[n-1];
-  el('st-range').textContent=(sorted[n-1]-sorted[0]).toFixed(4);
-  el('st-std').textContent=std.toFixed(4);
-  el('st-var').textContent=variance.toFixed(4);
-}
-
-// TRIANGLE
-function calcTri() {
-  const a=v('tri-a'), b=v('tri-b'), c=v('tri-c');
-  if(!a||!b||!c)return;
-  if(a+b<=c||a+c<=b||b+c<=a){el('tri-area').textContent='Invalid';return;}
-  const A=Math.acos((b*b+c*c-a*a)/(2*b*c))*180/Math.PI;
-  const B=Math.acos((a*a+c*c-b*b)/(2*a*c))*180/Math.PI;
-  const C=180-A-B;
-  const s=(a+b+c)/2, area=Math.sqrt(s*(s-a)*(s-b)*(s-c));
-  const type=A===90||B===90||C===90?'Right Triangle':A>90||B>90||C>90?'Obtuse Triangle':'Acute Triangle';
-  el('tri-area').textContent=area.toFixed(4)+' units²';
-  el('tri-A').textContent=A.toFixed(2)+'°';
-  el('tri-B').textContent=B.toFixed(2)+'°';
-  el('tri-C').textContent=C.toFixed(2)+'°';
-  el('tri-perim').textContent=(a+b+c).toFixed(4);
-  el('tri-type').textContent=type;
-}
-['tri-a','tri-b','tri-c'].forEach(id=>el(id)?.addEventListener('input',calcTri));
-
-// FUEL COST
-function calcFuel() {
-  const dist=v('fu-dist'), mpg=v('fu-mpg'), price=v('fu-price');
-  const gallons=mpg>0?dist/mpg:0;
-  const cost=gallons*price;
-  el('fu-cost').textContent=fmtD(cost);
-  el('fu-gallons').textContent=gallons.toFixed(2)+' gal';
-  el('fu-permile').textContent=fmtD(cost/dist);
-  el('fu-roundtrip').textContent=fmtD(cost*2);
-}
-['fu-dist','fu-mpg','fu-price'].forEach(id=>el(id)?.addEventListener('input',calcFuel));
-
-// UNIT CONVERTER
-function ucLen(from) {
-  const toM={km:1000,mi:1609.344,m:1,ft:0.3048};
-  const val=parseFloat(el('uc-'+from).value)||0;
-  const m=val*toM[from];
-  Object.keys(toM).forEach(u=>{if(u!==from)el('uc-'+u).value=+(m/toM[u]).toFixed(6);});
-}
-function ucWgt(from) {
-  const toG={kg:1000,lbs:453.592,oz:28.3495,g:1};
-  const val=parseFloat(el('uc-'+from).value)||0;
-  const g=val*toG[from];
-  Object.keys(toG).forEach(u=>{if(u!==from)el('uc-'+u).value=+(g/toG[u]).toFixed(6);});
-}
-function ucTemp(from) {
-  let c;
-  if(from==='c')c=parseFloat(el('uc-c').value)||0;
-  else if(from==='f')c=(parseFloat(el('uc-f').value)||0-32)*5/9;
-  else c=(parseFloat(el('uc-k').value)||0)-273.15;
-  if(from!=='c')el('uc-c').value=+c.toFixed(4);
-  if(from!=='f')el('uc-f').value=+(c*9/5+32).toFixed(4);
-  if(from!=='k')el('uc-k').value=+(c+273.15).toFixed(4);
-}
-// Init unit converter
-setTimeout(()=>{ucLen('km');ucWgt('kg');ucTemp('c');},100);
-
-// DISCOUNT
-function calcDiscount() {
-  const price=v('dc-price'), pct=v('dc-pct'), tax=v('dc-tax')/100;
-  const save=price*pct/100, sale=price-save;
-  const taxAmt=sale*tax, afterTax=sale+taxAmt;
-  el('dc-sale').textContent=fmtD(sale);
-  el('dc-save').textContent=fmtD(save);
-  el('dc-aftertax').textContent=fmtD(afterTax);
-  el('dc-taxamt').textContent=fmtD(taxAmt);
-}
-['dc-price','dc-pct','dc-tax'].forEach(id=>el(id)?.addEventListener('input',calcDiscount));
-
-// BILL SPLITTER
-function calcSplit() {
-  const bill=v('bs-bill'), people=Math.max(1,v('bs-people')), tip=v('bs-tip')/100;
-  const tipAmt=bill*tip, total=bill+tipAmt;
-  el('bs-each').textContent=fmtD(total/people);
-  el('bs-billpp').textContent=fmtD(bill/people);
-  el('bs-tipp').textContent=fmtD(tipAmt/people);
-  el('bs-total').textContent=fmtD(total);
-}
-['bs-bill','bs-people','bs-tip'].forEach(id=>el(id)?.addEventListener('input',calcSplit));
-
-// DATE RANGE
-function calcDateRange() {
-  const s=new Date(el('dr-start').value), e=new Date(el('dr-end').value);
-  if(isNaN(s)||isNaN(e))return;
-  const diff=Math.abs(e-s)/86400000;
-  el('dr-days').textContent=Math.round(diff)+' days';
-  el('dr-weeks').textContent=(diff/7).toFixed(1)+' weeks';
-  el('dr-months').textContent=(diff/30.44).toFixed(1)+' months';
-  el('dr-workdays').textContent=Math.round(diff*5/7)+' days';
-}
-
-// GRADE
-function calcGrade() {
-  const cur=v('gr-current'), weight=v('gr-weight')/100, desired=v('gr-desired');
-  const examWeight=1-weight;
-  const needed=examWeight>0?(desired-cur*weight)/examWeight:0;
-  el('gr-needed').textContent=needed.toFixed(1)+'%';
-  el('gr-examweight').textContent=(examWeight*100).toFixed(0)+'%';
-  el('gr-achievable').textContent=needed<=100?'Yes ✅':needed<=110?'Very hard ⚠️':'Not possible ❌';
-}
-['gr-current','gr-weight','gr-desired'].forEach(id=>el(id)?.addEventListener('input',calcGrade));
-
-// SPEED
-function calcSpeed() {
-  const speed=parseFloat(el('sp-speed').value)||0;
-  const dist=parseFloat(el('sp-dist').value)||0;
-  if(speed&&dist){
-    const t=dist/speed;
-    const h=Math.floor(t), m=Math.round((t-h)*60);
-    el('sp-result').textContent=h>0?h+'h '+m+'m':m+' min';
-    el('sp-speedshow').textContent=speed+' mph';
-    el('sp-distshow').textContent=dist+' miles';
-    el('sp-kmh').textContent=(speed*1.60934).toFixed(1)+' km/h';
+    document.getElementById('age-next').textContent = "In " + daysToNext + " days";
   }
 }
-['sp-speed','sp-dist','sp-time'].forEach(id=>el(id)?.addEventListener('input',calcSpeed));
 
-
-// TIMEZONE
-function calcTZ() {
-  const t=el('tz-time').value; if(!t)return;
-  const from=parseFloat(el('tz-from').value);
-  const [h,m]=t.split(':').map(Number);
-  const utcMins=h*60+m-from*60;
-  const zones={london:0,ny:-5,la:-8,dubai:4,sg:8,syd:10,jhb:2};
-  Object.entries(zones).forEach(([key,offset])=>{
-    const mins=((utcMins+offset*60)%1440+1440)%1440;
-    const zh=Math.floor(mins/60), zm=mins%60;
-    const ampm=zh>=12?'PM':'AM';
-    const h12=zh%12||12;
-    el('tz-'+key).textContent=`${h12}:${String(zm).padStart(2,'0')} ${ampm}`;
-  });
-}
-el('tz-from')?.addEventListener('change',calcTZ);
-
-// RECIPE CALORIES
-let ingredientCount=0;
-function addIngredient() {
-  ingredientCount++;
-  const div=document.createElement('div');
-  div.style.cssText='display:flex;gap:10px;margin-bottom:10px;align-items:center';
-  div.innerHTML=`<input type="text" placeholder="Ingredient ${ingredientCount}" class="no-prefix" style="flex:2;padding:9px 12px;background:#ffffff;border:1.5px solid #d0d5dd;border-radius:8px;color:#080814;font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:600;outline:none">
-  <input type="number" placeholder="Calories" class="rc-cals no-prefix" style="flex:1;padding:9px 12px;background:#ffffff;border:1.5px solid #d0d5dd;border-radius:8px;color:#080814;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;outline:none" oninput="calcRecipe()">
-  <button onclick="this.parentElement.remove();calcRecipe()" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:18px;padding:0 4px">×</button>`;
-  el('recipe-ingredients').appendChild(div);
-}
-function calcRecipe() {
-  const cals=[...document.querySelectorAll('.rc-cals')].reduce((s,i)=>s+(parseFloat(i.value)||0),0);
-  const servings=Math.max(1,v('rc-servings'));
-  el('rc-total').textContent=Math.round(cals)+' cal';
-  el('rc-perserving').textContent=Math.round(cals/servings)+' cal';
-}
-el('rc-servings')?.addEventListener('input',calcRecipe);
-setTimeout(()=>{addIngredient();addIngredient();addIngredient();},200);
-
-// ── INIT ALL NEW CALCS ────────────────────────────────────────────────────────
-setTimeout(()=>{
-  calcSavings();calcDTI();calcNetWorth();calcInflation();calcSalary();
-  calcROI();calcEF();calcCar();calcStock();calcTaxEst();
-  calcWater();calcBodyFat();calcHR();calcIW();calcSteps();
-  calcRY();calcStamp();calcReno();calcPaint();
-  calcQuad();calcTri();calcFuel();calcDiscount();calcSplit();
-  calcGrade();calcSpeed();calcConcrete();
-  const now=new Date();
-  const fmt2=d=>d.toISOString().split('T')[0];
-  el('dr-start').value=fmt2(now);
-  const e=new Date(now);e.setDate(e.getDate()+90);
-  el('dr-end').value=fmt2(e);
-  calcDateRange();
-  calcSleep();
-  calcTZ();
-  calcStats();
-}, 300);
-
-// ── INIT ──────────────────────────────────────────────────────────────────────
-function runAllCalcs() {
-  var calcs = [
-    calcLoan, calcMortgage, calcCI, calcCC, calcBudget, calcRetirement,
-    calcBMI, calcCalorie, calcMacro, calcTip, calcROI, calcSalary, calcTaxEst,
-    calcEF, calcCar, calcStock, calcDTI, calcNetWorth, calcInflation, calcSavings,
-    calcWater, calcBodyFat, calcHR, calcIW, calcSteps, calcRY, calcStamp,
-    calcReno, calcPaint, calcQuad, calcTri, calcFuel, calcDiscount, calcSplit,
-    calcGrade, calcSpeed, calcStats, calcPct, calcAfford, calcRB
-  ];
-  calcs.forEach(function(fn) { try { fn(); } catch(e) {} });
-  try { ucLen('km'); ucWgt('kg'); ucTemp('c'); } catch(e) {}
-  try { calcSleep(); } catch(e) {}
-  try { calcTZ(); } catch(e) {}
-  try { calcStats(); } catch(e) {}
-  try {
-    var now = new Date();
-    var pad = function(d) { return d.toISOString().split('T')[0]; };
-    var ageDob = document.getElementById('age-dob');
-    if (ageDob && !ageDob.value) { ageDob.value = '1990-01-01'; calcAge(); }
-    var start = document.getElementById('dr-start');
-    var end = document.getElementById('dr-end');
-    if (start) {
-      start.value = pad(now);
-      var e2 = new Date(now); e2.setDate(e2.getDate()+90);
-      end.value = pad(e2);
-      calcDateRange();
-    }
-    var sleepEl = document.getElementById('sleep-time');
-    if (sleepEl && !sleepEl.value) { sleepEl.value = '22:30'; calcSleep(); }
-    var tzTime = document.getElementById('tz-time');
-    if (tzTime && !tzTime.value) { tzTime.value = '09:00'; calcTZ(); }
-    var pregLmp = document.getElementById('preg-lmp');
-    if (pregLmp && !pregLmp.value) {
-      var d = new Date(); d.setMonth(d.getMonth()-2);
-      pregLmp.value = pad(d); calcPreg();
-    }
-  } catch(e) {}
-  setTimeout(function() {
-    try {
-      var gpaCourses = document.getElementById('gpa-courses');
-      if (gpaCourses && gpaCourses.children.length === 0) {
-        addGPACourse(); addGPACourse(); addGPACourse();
-      }
-    } catch(e) {}
-    try {
-      var recipeIngs = document.getElementById('recipe-ingredients');
-      if (recipeIngs && recipeIngs.children.length === 0) {
-        addIngredient(); addIngredient(); addIngredient();
-      }
-    } catch(e) {}
-  }, 100);
-}
-
-// ── FAQ ACCORDION ─────────────────────────────────────────────────────────────
-// Use event delegation - more reliable than querySelectorAll
-document.addEventListener('click', function(e) {
-  var q = e.target.closest('.faq-q');
-  if (q) {
-    e.preventDefault();
-    var item = q.parentElement;
-    // Close all others
-    document.querySelectorAll('.faq-item.open').forEach(function(open) {
-      if (open !== item) open.classList.remove('open');
-    });
-    // Toggle this one
-    item.classList.toggle('open');
+// Add pulse animation dynamically
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes pulse { 
+    0% { transform: scale(1); } 
+    50% { transform: scale(1.03); } 
+    100% { transform: scale(1); } 
   }
-});
-
-// ── START ─────────────────────────────────────────────────────────────────────
-function safeInit() { if (typeof runAllCalcs === "function") { try { runAllCalcs(); } catch(e) { console.log("Init error:", e); } } }
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', safeInit);
-} else {
-  safeInit();
-}
+  .pulse { animation: pulse 0.3s ease-out; }
+`;
+document.head.appendChild(style);
 </script>
 
 </body>
